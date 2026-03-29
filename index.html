@@ -75,8 +75,7 @@ body {
 /* ── Tela principal ── */
 .scene{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;gap:20px;padding:20px 16px}
 
-.title-eye{font-family:'Crimson Pro',serif;font-style:italic;font-size:11px;letter-spacing:4px;color:var(--gold2);text-transform:uppercase;opacity:.6;text-align:center;margin-bottom:4px;-webkit-animation:up 1s ease both;animation:up 1s ease both}
-.title-h{font-size:clamp(14px,3vw,22px);font-weight:900;letter-spacing:6px;text-transform:uppercase;text-align:center;background:linear-gradient(180deg,#ffdf6b 0%,#d4a012 55%,#e8891a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 10px rgba(245,200,66,.35));-webkit-animation:up 1s ease .1s both;animation:up 1s ease .1s both}
+.title-h{font-size:clamp(16px,3.5vw,24px);font-weight:900;letter-spacing:6px;text-transform:uppercase;text-align:center;background:linear-gradient(180deg,#ffdf6b 0%,#d4a012 55%,#e8891a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 10px rgba(245,200,66,.35));-webkit-animation:up 1s ease both;animation:up 1s ease both}
 
 /* ── Mensagem de contagem / estado ── */
 .count-msg{text-align:center;max-width:300px;-webkit-animation:up .8s ease .2s both;animation:up .8s ease .2s both}
@@ -135,25 +134,25 @@ body {
 @keyframes sr{from{opacity:0;transform:scaleY(.15) translateY(-8px)}to{opacity:1;transform:none}}
 .slip::before,.slip::after{content:'✦';position:absolute;color:var(--gold2);font-size:9px;top:7px}
 .slip::before{left:9px}.slip::after{right:9px}
-.sl-header{font-size:8px;letter-spacing:3px;color:var(--gold3);text-transform:uppercase;margin-bottom:9px;opacity:.75}
-.sl-text{font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;line-height:1.65;color:var(--brown);margin-bottom:10px}
-.sl-div{width:50px;height:1px;background:linear-gradient(90deg,transparent,var(--gold2),transparent);margin:8px auto}
-.sl-days{font-size:11px;letter-spacing:3px;color:var(--gold3);font-family:'Cinzel',serif}
+.sl-text{font-family:'Crimson Pro',serif;font-style:italic;font-size:15px;line-height:1.7;color:var(--brown);margin-bottom:14px}
+.sl-div{width:40px;height:1px;background:linear-gradient(90deg,transparent,var(--gold2),transparent);margin:0 auto 10px}
+.sl-days{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold3);font-family:'Cinzel',serif;opacity:.8}
 
 /* ── Botão ── */
 .btn{font-family:'Cinzel',serif;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--bg);background:linear-gradient(180deg,#ffdf6b 0%,#d4a012 55%,#e8891a 100%);border:none;padding:13px 28px;border-radius:2px;cursor:pointer;position:relative;overflow:hidden;box-shadow:0 0 0 1px var(--gold3),0 4px 14px rgba(245,200,66,.3),inset 0 1px 0 rgba(255,255,255,.3);-webkit-transition:all .3s;transition:all .3s;-webkit-animation:up 1s ease .5s both;animation:up 1s ease .5s both;-webkit-tap-highlight-color:transparent}
 .btn:active{-webkit-transform:translateY(1px);transform:translateY(1px)}
 .btn.hidden{display:none}
 
+/* ── hidden global ── */
+.hidden{display:none!important}
+
 /* ── Mensagem biscoito vencido ── */
-.expired-msg{text-align:center;max-width:280px;padding:20px;opacity:0;-webkit-animation:up .8s ease .3s forwards;animation:up .8s ease .3s forwards}
-.expired-icon{font-size:28px;margin-bottom:12px;opacity:.5}
-.expired-text{font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;line-height:1.7;color:rgba(245,200,66,.45)}
+.expired-msg{text-align:center;max-width:280px;padding:16px 0;-webkit-animation:up .7s ease .2s both;animation:up .7s ease .2s both}
+.expired-text{font-family:'Crimson Pro',serif;font-style:italic;font-size:15px;line-height:1.7;color:rgba(245,200,66,.55)}
 
 /* ── Mensagem "volte amanhã" ── */
-.tomorrow-msg{text-align:center;max-width:280px;padding:16px 0;opacity:0;-webkit-animation:up .8s ease .3s forwards;animation:up .8s ease .3s forwards}
-.tomorrow-text{font-family:'Crimson Pro',serif;font-style:italic;font-size:13px;line-height:1.7;color:rgba(245,200,66,.5);margin-bottom:6px}
-.tomorrow-sub{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:rgba(245,200,66,.25)}
+.tomorrow-msg{text-align:center;max-width:280px;padding:12px 0;-webkit-animation:up .7s ease .2s both;animation:up .7s ease .2s both}
+.tomorrow-text{font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:rgba(245,200,66,.45)}
 
 /* PWA prompt */
 .pwa-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(20,12,4,.96);border-top:1px solid rgba(245,200,66,.15);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;z-index:50;-webkit-animation:slideup .4s ease both;animation:slideup .4s ease both}
@@ -190,20 +189,13 @@ body {
 <!-- ── Tela principal ── -->
 <div class="screen hidden" id="screen-main">
   <div class="scene">
-    <div>
-      <div class="title-eye" id="title-eye">Oráculo do Tempo</div>
-      <div class="title-h">Biscoito da Sorte</div>
-    </div>
+    <div class="title-h">Biscoito da Sorte</div>
 
     <div class="count-msg" id="count-msg"></div>
 
     <div class="stage">
       <div class="aura"></div>
       <div class="ring"></div><div class="ring"></div><div class="ring"></div>
-      <div class="orbit">
-        <span class="rune">⚜</span><span class="rune">✦</span><span class="rune">⟡</span>
-        <span class="rune">⚜</span><span class="rune">✦</span><span class="rune">⟡</span>
-      </div>
 
       <!-- Cookie: SVG real com duas asas que se abrem -->
       <div class="cookie-wrap" id="cookie">
@@ -305,22 +297,19 @@ body {
 
     <!-- Paper slip -->
     <div class="slip" id="slip">
-      <div class="sl-header">✦ &nbsp; Sua Profecia &nbsp; ✦</div>
       <div class="sl-text" id="sl-text"></div>
       <div class="sl-div"></div>
-      <div class="sl-days" id="sl-days" style="font-size:10px;letter-spacing:2px;line-height:1.5"></div>
+      <div class="sl-days" id="sl-days"></div>
     </div>
 
     <!-- expired -->
     <div class="expired-msg hidden" id="expired-msg">
-      <div class="expired-icon">🍪</div>
       <div class="expired-text" id="expired-text"></div>
     </div>
 
     <!-- tomorrow -->
     <div class="tomorrow-msg hidden" id="tomorrow-msg">
       <div class="tomorrow-text">Volte amanhã.</div>
-      <div class="tomorrow-sub">Um novo biscoito espera por você</div>
     </div>
 
     <button class="btn hidden" id="open-btn">✦ &nbsp; Abrir Biscoito &nbsp; ✦</button>
