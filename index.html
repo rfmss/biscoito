@@ -151,6 +151,7 @@ body {
 /* ── Mensagem "volte amanhã" ── */
 .tomorrow-msg{text-align:center;max-width:280px;padding:12px 0;-webkit-animation:up .7s ease .2s both;animation:up .7s ease .2s both}
 .tomorrow-text{font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:rgba(245,200,66,.45)}
+.tomorrow-count{font-family:'Crimson Pro',serif;font-size:28px;color:rgba(245,200,66,.7);letter-spacing:.08em;margin-top:4px}
 
 /* PWA prompt */
 .pwa-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(20,12,4,.96);border-top:1px solid rgba(245,200,66,.15);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;z-index:50;-webkit-animation:slideup .4s ease both;animation:slideup .4s ease both}
@@ -306,7 +307,8 @@ body {
 
     <!-- tomorrow -->
     <div class="tomorrow-msg hidden" id="tomorrow-msg">
-      <div class="tomorrow-text">Volte amanhã.</div>
+      <div class="tomorrow-text">Próximo biscoito em</div>
+      <div class="tomorrow-count" id="tomorrow-count">--:--:--</div>
     </div>
 
     <button class="btn hidden" id="open-btn">✦ &nbsp; Abrir Biscoito &nbsp; ✦</button>
@@ -548,8 +550,34 @@ function showExpired(dias) {
   showTomorrow();
 }
 
+var _cdTimer = null;
+
 function showTomorrow() {
   document.getElementById('tomorrow-msg').className = 'tomorrow-msg';
+  startCountdown();
+}
+
+function startCountdown() {
+  if (_cdTimer) clearInterval(_cdTimer);
+  function tick() {
+    var ts = parseInt(load('bsc_last_opened_ts') || '0', 10);
+    var next = ts + 24 * 60 * 60 * 1000;
+    var diff = next - Date.now();
+    var el = document.getElementById('tomorrow-count');
+    if (!el) return;
+    if (diff <= 0) {
+      el.textContent = '00:00:00';
+      clearInterval(_cdTimer);
+      return;
+    }
+    var h = Math.floor(diff / 3600000);
+    var m = Math.floor((diff % 3600000) / 60000);
+    var s = Math.floor((diff % 60000) / 1000);
+    function pad(n) { return n < 10 ? '0' + n : '' + n; }
+    el.textContent = pad(h) + ':' + pad(m) + ':' + pad(s);
+  }
+  tick();
+  _cdTimer = setInterval(tick, 1000);
 }
 
 function openCookie(dias) {
@@ -574,6 +602,7 @@ function openCookie(dias) {
     var dias2 = dias;
     var frase = getFrase(dias2);
     save('bsc_last_opened', todayKey());
+    save('bsc_last_opened_ts', String(Date.now()));
     save('bsc_frase_today', frase);
 
     showOpened(frase, dias2);
