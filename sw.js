@@ -1,5 +1,5 @@
-var CACHE = 'biscoito-v1';
-var FILES = ['/', '/index.html', '/manifest.json'];
+var CACHE = 'biscoito-v2';
+var FILES = ['/', '/index.html', '/manifest.json', '/frases.js'];
 
 self.addEventListener('install', function(e) {
   e.waitUntil(caches.open(CACHE).then(function(c) { return c.addAll(FILES); }));
