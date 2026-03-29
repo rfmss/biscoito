@@ -328,11 +328,19 @@ body {
   </div>
 </div>
 
-<!-- PWA prompt -->
+<!-- PWA prompt Android/Chrome -->
 <div class="pwa-bar hidden" id="pwa-bar">
   <div class="pwa-txt"><strong>Instalar App</strong>Salve na tela inicial para não perder seus biscoitos</div>
   <div class="pwa-actions">
     <button class="pwa-ok" id="pwa-ok">Instalar</button>
+    <button class="pwa-x" onclick="dismissPwa()">✕</button>
+  </div>
+</div>
+
+<!-- PWA prompt iOS Safari -->
+<div class="pwa-bar hidden" id="pwa-ios">
+  <div class="pwa-txt"><strong>Instalar App</strong>Toque em <span style="color:var(--gold)">&#x2B06; Compartilhar</span> e depois "Adicionar à Tela de Início"</div>
+  <div class="pwa-actions">
     <button class="pwa-x" onclick="dismissPwa()">✕</button>
   </div>
 </div>
@@ -610,13 +618,22 @@ function openCookie(dias) {
 })();
 
 // ── PWA ──
+var _isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Macintosh/i.test(navigator.userAgent));
+var _isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent) && !window.MSStream;
+var _isStandalone = window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches;
+
 window.addEventListener('beforeinstallprompt', function(e) {
   e.preventDefault();
   _deferredInstall = e;
 });
 
 function showPwa() {
-  if (_deferredInstall && !load('bsc_pwa_dismissed')) {
+  if (!_isMobile || _isStandalone || load('bsc_pwa_dismissed')) return;
+  if (_isIOS) {
+    // iOS Safari: sem beforeinstallprompt, mostra instrução manual
+    document.getElementById('pwa-ios').className = 'pwa-bar';
+  } else if (_deferredInstall) {
+    // Android/Chrome: usa a API nativa
     document.getElementById('pwa-bar').className = 'pwa-bar';
   }
 }
@@ -625,13 +642,17 @@ document.getElementById('pwa-ok').addEventListener('click', function() {
   document.getElementById('pwa-bar').className = 'pwa-bar hidden';
   if (_deferredInstall) {
     _deferredInstall.prompt();
-    _deferredInstall.userChoice.then(function() { _deferredInstall = null; });
+    _deferredInstall.userChoice.then(function() {
+      _deferredInstall = null;
+      save('bsc_pwa_dismissed', '1');
+    });
   }
 });
 
 function dismissPwa() {
-  save('bsc_pwa_dismissed','1');
+  save('bsc_pwa_dismissed', '1');
   document.getElementById('pwa-bar').className = 'pwa-bar hidden';
+  document.getElementById('pwa-ios').className = 'pwa-bar hidden';
 }
 
 // ── Stars ──
@@ -649,7 +670,7 @@ function dismissPwa() {
 // ── Service Worker ──
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/sw.js');
+    navigator.serviceWorker.register('/biscoito/sw.js');
   });
 }
 
