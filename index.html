@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0d0a06">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Biscoito">
+<link rel="manifest" href="manifest.json">
+<title>Biscoito da Sorte</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Pro:ital,wght@0,400;1,300;1,400&display=swap');
+
+:root {
+  --gold:#f5c842; --gold2:#d4a012; --gold3:#8b6500;
+  --amber:#e8891a; --teal:#2ecc9b; --bg:#0d0a06;
+  --parchment:#f5ecd4; --brown:#5c3010;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+body {
+  min-height:100vh;
+  background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cinzel',serif;
+  overflow:hidden;
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* ── Fundo estrelado ── */
+.bg{position:fixed;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse at 20% 30%,rgba(74,144,217,.08) 0%,transparent 55%),
+    radial-gradient(ellipse at 80% 70%,rgba(155,89,182,.07) 0%,transparent 55%),
+    #0d0a06;
+}
+.star{position:absolute;border-radius:50%;background:#fff;
+  -webkit-animation:tw var(--d,3s) ease-in-out infinite var(--dl,0s);
+  animation:tw var(--d,3s) ease-in-out infinite var(--dl,0s)}
+@-webkit-keyframes tw{0%,100%{opacity:.07;-webkit-transform:scale(1)}50%{opacity:var(--mo,.7);-webkit-transform:scale(1.4)}}
+@keyframes tw{0%,100%{opacity:.07;transform:scale(1)}50%{opacity:var(--mo,.7);transform:scale(1.4)}}
+
+/* ── Partículas ambientais ── */
+.ap{position:fixed;border-radius:50%;pointer-events:none;
+  -webkit-animation:afp var(--d,8s) ease-in-out infinite var(--dl,0s);
+  animation:afp var(--d,8s) ease-in-out infinite var(--dl,0s);opacity:0}
+@-webkit-keyframes afp{0%,100%{-webkit-transform:translateY(0) scale(1);opacity:0}20%{opacity:.8}80%{opacity:.4}100%{-webkit-transform:translateY(-140px) translateX(var(--dx,0px)) scale(.15);opacity:0}}
+@keyframes afp{0%,100%{transform:translateY(0) scale(1);opacity:0}20%{opacity:.8}80%{opacity:.4}100%{transform:translateY(-140px) translateX(var(--dx,0px)) scale(.15);opacity:0}}
+
+@-webkit-keyframes up{from{opacity:0;-webkit-transform:translateY(14px)}to{opacity:1;-webkit-transform:none}}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* ── Screens ── */
+.screen{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;background:var(--bg)}
+.screen.hidden{display:none}
+
+/* ── Tela de setup ── */
+.setup-box{background:rgba(20,12,4,.92);border:1px solid rgba(245,200,66,.18);border-radius:8px;padding:36px 28px;width:min(340px,92vw);text-align:center;box-shadow:0 0 60px rgba(245,200,66,.08);}
+.setup-title{font-size:11px;letter-spacing:4px;color:var(--gold2);text-transform:uppercase;opacity:.6;margin-bottom:6px}
+.setup-h{font-size:22px;font-weight:900;letter-spacing:4px;text-transform:uppercase;background:linear-gradient(180deg,#ffdf6b 0%,#d4a012 55%,#e8891a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:28px}
+.setup-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(245,200,66,.45);text-align:left;margin-bottom:8px;display:block}
+.setup-input{width:100%;background:rgba(245,200,66,.05);border:1px solid rgba(245,200,66,.2);color:var(--parchment);font-family:'Cinzel',serif;font-size:18px;letter-spacing:4px;text-align:center;padding:12px;border-radius:3px;outline:none;margin-bottom:20px;-webkit-appearance:none}
+.setup-input:focus{border-color:rgba(245,200,66,.5);background:rgba(245,200,66,.08)}
+.setup-input::-webkit-input-placeholder{color:rgba(245,200,66,.25);font-size:14px}
+.setup-input::placeholder{color:rgba(245,200,66,.25);font-size:14px}
+.gender-row{display:flex;gap:12px;margin-bottom:24px}
+.gender-btn{flex:1;padding:10px 6px;border:1px solid rgba(245,200,66,.2);background:rgba(245,200,66,.04);color:rgba(245,200,66,.5);font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;border-radius:3px;cursor:pointer;-webkit-transition:all .2s;transition:all .2s;-webkit-tap-highlight-color:transparent}
+.gender-btn.active{border-color:var(--gold);background:rgba(245,200,66,.14);color:var(--gold)}
+.setup-btn{width:100%;font-family:'Cinzel',serif;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--bg);background:linear-gradient(180deg,#ffdf6b 0%,#d4a012 55%,#e8891a 100%);border:none;padding:14px;border-radius:2px;cursor:pointer;box-shadow:0 0 0 1px var(--gold3),0 4px 14px rgba(245,200,66,.3);-webkit-transition:all .2s;transition:all .2s}
+.setup-btn:active{-webkit-transform:translateY(1px);transform:translateY(1px)}
+.setup-err{font-size:10px;letter-spacing:2px;color:#e84040;margin-top:10px;min-height:16px;text-transform:uppercase}
+
+/* ── Tela principal ── */
+.scene{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;gap:20px;padding:20px 16px}
+
+.title-eye{font-family:'Crimson Pro',serif;font-style:italic;font-size:11px;letter-spacing:4px;color:var(--gold2);text-transform:uppercase;opacity:.6;text-align:center;margin-bottom:4px;-webkit-animation:up 1s ease both;animation:up 1s ease both}
+.title-h{font-size:clamp(14px,3vw,22px);font-weight:900;letter-spacing:6px;text-transform:uppercase;text-align:center;background:linear-gradient(180deg,#ffdf6b 0%,#d4a012 55%,#e8891a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 10px rgba(245,200,66,.35));-webkit-animation:up 1s ease .1s both;animation:up 1s ease .1s both}
+
+/* ── Mensagem de contagem / estado ── */
+.count-msg{text-align:center;max-width:300px;-webkit-animation:up .8s ease .2s both;animation:up .8s ease .2s both}
+.count-main{font-family:'Crimson Pro',serif;font-style:italic;font-size:15px;line-height:1.6;color:var(--parchment);margin-bottom:6px}
+.count-sub{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(245,200,66,.35)}
+
+/* ── Stage do biscoito ── */
+.stage{position:relative;width:300px;height:240px;display:flex;align-items:center;justify-content:center;-webkit-animation:up 1s ease .3s both;animation:up 1s ease .3s both}
+.aura{position:absolute;inset:30px;border-radius:50%;background:radial-gradient(circle,rgba(245,200,66,.16) 0%,rgba(232,137,26,.05) 45%,transparent 70%);-webkit-animation:pa 3.5s ease-in-out infinite;animation:pa 3.5s ease-in-out infinite}
+@-webkit-keyframes pa{0%,100%{-webkit-transform:scale(1);opacity:.7}50%{-webkit-transform:scale(1.08);opacity:1}}
+@keyframes pa{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.08);opacity:1}}
+.ring{position:absolute;border-radius:50%;border:1px solid rgba(245,200,66,.11);-webkit-animation:pr 3.5s ease-out infinite;animation:pr 3.5s ease-out infinite}
+.ring:nth-child(2){inset:40px;-webkit-animation-delay:0s;animation-delay:0s}
+.ring:nth-child(3){inset:18px;-webkit-animation-delay:.7s;animation-delay:.7s;border-color:rgba(245,200,66,.06)}
+.ring:nth-child(4){inset:-4px;-webkit-animation-delay:1.4s;animation-delay:1.4s;border-color:rgba(245,200,66,.04)}
+@-webkit-keyframes pr{0%{-webkit-transform:scale(.85);opacity:.8}100%{-webkit-transform:scale(1.25);opacity:0}}
+@keyframes pr{0%{transform:scale(.85);opacity:.8}100%{transform:scale(1.25);opacity:0}}
+.orbit{position:absolute;inset:0;-webkit-animation:orb 14s linear infinite;animation:orb 14s linear infinite}
+.rune{position:absolute;font-size:11px;color:var(--gold2);opacity:.3;text-shadow:0 0 8px #ffdf6b;-webkit-animation:rg 3s ease-in-out infinite;animation:rg 3s ease-in-out infinite}
+.rune:nth-child(1){top:5%;left:50%;-webkit-transform:translateX(-50%);transform:translateX(-50%);-webkit-animation-delay:0s;animation-delay:0s}
+.rune:nth-child(2){top:27%;right:4%;-webkit-animation-delay:.5s;animation-delay:.5s}
+.rune:nth-child(3){bottom:27%;right:4%;-webkit-animation-delay:1s;animation-delay:1s}
+.rune:nth-child(4){bottom:5%;left:50%;-webkit-transform:translateX(-50%);transform:translateX(-50%);-webkit-animation-delay:1.5s;animation-delay:1.5s}
+.rune:nth-child(5){bottom:27%;left:4%;-webkit-animation-delay:2s;animation-delay:2s}
+.rune:nth-child(6){top:27%;left:4%;-webkit-animation-delay:2.5s;animation-delay:2.5s}
+@-webkit-keyframes orb{from{-webkit-transform:rotate(0)}to{-webkit-transform:rotate(360deg)}}
+@keyframes orb{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@-webkit-keyframes rg{0%,100%{opacity:.22}50%{opacity:.82;color:var(--teal);text-shadow:0 0 14px var(--teal)}}
+@keyframes rg{0%,100%{opacity:.22}50%{opacity:.82;color:var(--teal);text-shadow:0 0 14px var(--teal)}}
+
+/* ── Cookie: duas metades ── */
+.cookie-wrap{position:relative;cursor:pointer;width:240px;height:200px;
+  filter:drop-shadow(0 0 22px rgba(245,200,66,.5)) drop-shadow(0 14px 36px rgba(0,0,0,.9));
+  -webkit-animation:fl 4s ease-in-out infinite;animation:fl 4s ease-in-out infinite;
+  -webkit-transition:filter .3s;transition:filter .3s}
+.cookie-wrap:hover{filter:drop-shadow(0 0 40px rgba(245,200,66,1)) drop-shadow(0 16px 46px rgba(0,0,0,.95))}
+@-webkit-keyframes fl{0%,100%{-webkit-transform:translateY(0) rotate(-.5deg)}50%{-webkit-transform:translateY(-12px) rotate(.5deg)}}
+@keyframes fl{0%,100%{transform:translateY(0) rotate(-.5deg)}50%{transform:translateY(-12px) rotate(.5deg)}}
+
+/* metade de cima */
+.half-top{position:absolute;top:0;left:0;width:100%;height:100%;
+  -webkit-transform-origin:center 55%;transform-origin:center 55%;
+  -webkit-transition:-webkit-transform .55s cubic-bezier(.34,1.2,.64,1);
+  transition:transform .55s cubic-bezier(.34,1.2,.64,1)}
+/* metade de baixo */
+.half-bot{position:absolute;top:0;left:0;width:100%;height:100%;
+  -webkit-transform-origin:center 45%;transform-origin:center 45%;
+  -webkit-transition:-webkit-transform .55s cubic-bezier(.34,1.2,.64,1);
+  transition:transform .55s cubic-bezier(.34,1.2,.64,1)}
+
+.cookie-wrap.open .half-top{-webkit-transform:translateY(-42px) rotate(-12deg);transform:translateY(-42px) rotate(-12deg)}
+.cookie-wrap.open .half-bot{-webkit-transform:translateY(38px) rotate(10deg);transform:translateY(38px) rotate(10deg)}
+.cookie-wrap.open{-webkit-animation:none;animation:none;cursor:default}
+
+/* crack shake */
+.cookie-wrap.crack{-webkit-animation:cs .44s ease forwards;animation:cs .44s ease forwards;pointer-events:none}
+@-webkit-keyframes cs{0%{-webkit-transform:translateY(0) rotate(0)}15%{-webkit-transform:translateY(-5px) rotate(-3deg)}35%{-webkit-transform:translateY(3px) rotate(3deg)}55%{-webkit-transform:translateY(-2px) rotate(-1.5deg)}80%{-webkit-transform:translateY(2px) rotate(1deg)}100%{-webkit-transform:translateY(0) rotate(0)}}
+@keyframes cs{0%{transform:translateY(0) rotate(0)}15%{transform:translateY(-5px) rotate(-3deg)}35%{transform:translateY(3px) rotate(3deg)}55%{transform:translateY(-2px) rotate(-1.5deg)}80%{transform:translateY(2px) rotate(1deg)}100%{transform:translateY(0) rotate(0)}}
+
+/* Partículas */
+.cp{position:absolute;border-radius:50%;top:50%;left:50%;opacity:0;
+  -webkit-animation:cpf var(--du,.8s) ease-out forwards var(--dl2,0s);
+  animation:cpf var(--du,.8s) ease-out forwards var(--dl2,0s)}
+@-webkit-keyframes cpf{0%{-webkit-transform:translate(-50%,-50%) scale(1);opacity:1}100%{-webkit-transform:translate(calc(-50% + var(--tx)),calc(-50% + var(--ty))) scale(0);opacity:0}}
+@keyframes cpf{0%{transform:translate(-50%,-50%) scale(1);opacity:1}100%{transform:translate(calc(-50% + var(--tx)),calc(-50% + var(--ty))) scale(0);opacity:0}}
+
+/* ── Fortune slip ── */
+.slip{width:min(285px,88vw);background:var(--parchment);border:1px solid rgba(200,155,30,.4);border-radius:3px;padding:18px 22px;text-align:center;box-shadow:0 0 0 1px rgba(245,200,66,.15),0 6px 24px rgba(0,0,0,.65),inset 0 0 30px rgba(245,200,66,.04);display:none;position:relative;-webkit-animation:up .8s ease .2s both;animation:up .8s ease .2s both}
+.slip.on{display:block;-webkit-animation:sr .55s cubic-bezier(.34,1.56,.64,1) both;animation:sr .55s cubic-bezier(.34,1.56,.64,1) both}
+@-webkit-keyframes sr{from{opacity:0;-webkit-transform:scaleY(.15) translateY(-8px)}to{opacity:1;-webkit-transform:none}}
+@keyframes sr{from{opacity:0;transform:scaleY(.15) translateY(-8px)}to{opacity:1;transform:none}}
+.slip::before,.slip::after{content:'✦';position:absolute;color:var(--gold2);font-size:9px;top:7px}
+.slip::before{left:9px}.slip::after{right:9px}
+.sl-header{font-size:8px;letter-spacing:3px;color:var(--gold3);text-transform:uppercase;margin-bottom:9px;opacity:.75}
+.sl-text{font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;line-height:1.65;color:var(--brown);margin-bottom:10px}
+.sl-div{width:50px;height:1px;background:linear-gradient(90deg,transparent,var(--gold2),transparent);margin:8px auto}
+.sl-days{font-size:11px;letter-spacing:3px;color:var(--gold3);font-family:'Cinzel',serif}
+
+/* ── Botão ── */
+.btn{font-family:'Cinzel',serif;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--bg);background:linear-gradient(180deg,#ffdf6b 0%,#d4a012 55%,#e8891a 100%);border:none;padding:13px 28px;border-radius:2px;cursor:pointer;position:relative;overflow:hidden;box-shadow:0 0 0 1px var(--gold3),0 4px 14px rgba(245,200,66,.3),inset 0 1px 0 rgba(255,255,255,.3);-webkit-transition:all .3s;transition:all .3s;-webkit-animation:up 1s ease .5s both;animation:up 1s ease .5s both;-webkit-tap-highlight-color:transparent}
+.btn:active{-webkit-transform:translateY(1px);transform:translateY(1px)}
+.btn.hidden{display:none}
+
+/* ── Mensagem biscoito vencido ── */
+.expired-msg{text-align:center;max-width:280px;padding:20px;opacity:0;-webkit-animation:up .8s ease .3s forwards;animation:up .8s ease .3s forwards}
+.expired-icon{font-size:28px;margin-bottom:12px;opacity:.5}
+.expired-text{font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;line-height:1.7;color:rgba(245,200,66,.45)}
+
+/* ── Mensagem "volte amanhã" ── */
+.tomorrow-msg{text-align:center;max-width:280px;padding:16px 0;opacity:0;-webkit-animation:up .8s ease .3s forwards;animation:up .8s ease .3s forwards}
+.tomorrow-text{font-family:'Crimson Pro',serif;font-style:italic;font-size:13px;line-height:1.7;color:rgba(245,200,66,.5);margin-bottom:6px}
+.tomorrow-sub{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:rgba(245,200,66,.25)}
+
+/* PWA prompt */
+.pwa-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(20,12,4,.96);border-top:1px solid rgba(245,200,66,.15);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;z-index:50;-webkit-animation:slideup .4s ease both;animation:slideup .4s ease both}
+@-webkit-keyframes slideup{from{-webkit-transform:translateY(100%)}to{-webkit-transform:none}}
+@keyframes slideup{from{transform:translateY(100%)}to{transform:none}}
+.pwa-txt{font-size:10px;letter-spacing:1px;color:rgba(245,200,66,.6);line-height:1.4}
+.pwa-txt strong{color:var(--gold);display:block;font-size:11px;letter-spacing:2px}
+.pwa-actions{display:flex;gap:8px;flex-shrink:0}
+.pwa-ok{font-family:'Cinzel',serif;font-size:9px;font-weight:700;letter-spacing:2px;color:var(--bg);background:var(--gold);border:none;padding:8px 14px;border-radius:2px;cursor:pointer}
+.pwa-x{font-family:'Cinzel',serif;font-size:9px;color:rgba(245,200,66,.4);background:transparent;border:1px solid rgba(245,200,66,.15);padding:8px 10px;border-radius:2px;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="bg" id="bg"></div>
+<div id="ac" style="position:fixed;inset:0;pointer-events:none;z-index:5"></div>
+
+<!-- ── Tela de setup ── -->
+<div class="screen" id="screen-setup">
+  <div class="setup-box">
+    <div class="setup-title">Oráculo do Tempo</div>
+    <div class="setup-h">Biscoito da Sorte</div>
+    <label class="setup-label" for="inp-data">Mês e ano de nascimento</label>
+    <input class="setup-input" id="inp-data" type="text" inputmode="numeric" placeholder="MM/AA" maxlength="5" autocomplete="off">
+    <label class="setup-label">Gênero (para expectativa IBGE)</label>
+    <div class="gender-row">
+      <button class="gender-btn" id="btn-m" onclick="selGender('M')">♂ Masculino</button>
+      <button class="gender-btn" id="btn-f" onclick="selGender('F')">♀ Feminino</button>
+    </div>
+    <button class="setup-btn" onclick="setupConfirm()">✦ Confirmar ✦</button>
+    <div class="setup-err" id="setup-err"></div>
+  </div>
+</div>
+
+<!-- ── Tela principal ── -->
+<div class="screen hidden" id="screen-main">
+  <div class="scene">
+    <div>
+      <div class="title-eye" id="title-eye">Oráculo do Tempo</div>
+      <div class="title-h">Biscoito da Sorte</div>
+    </div>
+
+    <div class="count-msg" id="count-msg"></div>
+
+    <div class="stage">
+      <div class="aura"></div>
+      <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+      <div class="orbit">
+        <span class="rune">⚜</span><span class="rune">✦</span><span class="rune">⟡</span>
+        <span class="rune">⚜</span><span class="rune">✦</span><span class="rune">⟡</span>
+      </div>
+
+      <!-- Cookie com duas metades separáveis -->
+      <div class="cookie-wrap" id="cookie">
+        <!-- Metade superior -->
+        <svg class="half-top" width="240" height="200" viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg" style="position:absolute;top:0;left:0">
+          <defs>
+            <radialGradient id="gT" cx="40%" cy="25%" r="70%">
+              <stop offset="0%" stop-color="#F5BE50"/>
+              <stop offset="35%" stop-color="#E0961E"/>
+              <stop offset="70%" stop-color="#C07810"/>
+              <stop offset="100%" stop-color="#8B5208"/>
+            </radialGradient>
+            <radialGradient id="gTS" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#4A2004"/>
+              <stop offset="100%" stop-color="#1E0A02"/>
+            </radialGradient>
+          </defs>
+          <!-- lóbulo superior: arco superior do biscoito -->
+          <path d="M 50 108 C 48 90, 44 70, 48 52 C 52 34, 66 22, 82 16 C 98 10, 116 10, 132 16 C 148 22, 160 34, 166 52 C 172 70, 170 90, 168 108 C 155 98, 140 92, 120 90 C 100 88, 80 94, 50 108 Z" fill="url(#gT)"/>
+          <!-- highlight topo -->
+          <path d="M 82 16 C 100 10, 120 10, 138 18 C 152 24, 162 36, 166 52" stroke="#F8E080" stroke-width="3.5" fill="none" stroke-linecap="round" opacity=".8"/>
+          <!-- reflexo -->
+          <ellipse cx="108" cy="52" rx="30" ry="14" fill="rgba(255,240,160,.25)" transform="rotate(-8,108,52)"/>
+          <!-- textura -->
+          <circle cx="72" cy="62" r="3" fill="rgba(140,70,8,.28)"/>
+          <circle cx="148" cy="58" r="2.5" fill="rgba(140,70,8,.22)"/>
+          <circle cx="96" cy="36" r="2" fill="rgba(140,70,8,.2)"/>
+        </svg>
+
+        <!-- Metade inferior -->
+        <svg class="half-bot" width="240" height="200" viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg" style="position:absolute;top:0;left:0">
+          <defs>
+            <radialGradient id="gB" cx="42%" cy="70%" r="70%">
+              <stop offset="0%" stop-color="#E8A030"/>
+              <stop offset="35%" stop-color="#D08020"/>
+              <stop offset="70%" stop-color="#B06818"/>
+              <stop offset="100%" stop-color="#7A4408"/>
+            </radialGradient>
+            <linearGradient id="gPaper2" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#F8F0D8"/>
+              <stop offset="50%" stop-color="#F0E4BC"/>
+              <stop offset="100%" stop-color="#DDD098"/>
+            </linearGradient>
+          </defs>
+          <!-- lóbulo inferior: arco inferior do biscoito -->
+          <path d="M 50 108 C 80 94, 100 88, 120 90 C 140 92, 155 98, 168 108 C 170 124, 168 142, 160 158 C 152 174, 136 184, 120 186 C 104 188, 88 180, 74 168 C 60 156, 52 138, 50 122 C 49 116, 50 112, 50 108 Z" fill="url(#gB)"/>
+          <!-- highlight borda superior da metade de baixo -->
+          <path d="M 50 108 C 80 94, 100 88, 120 90 C 140 92, 155 98, 168 108" stroke="#F8D878" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".7"/>
+          <!-- sombra interna inferior -->
+          <path d="M 74 168 C 60 156, 52 140, 50 124 C 52 136, 56 152, 68 164 Z" fill="rgba(0,0,0,.15)"/>
+          <!-- reflexo -->
+          <ellipse cx="112" cy="144" rx="26" ry="12" fill="rgba(255,230,140,.2)" transform="rotate(5,112,144)"/>
+          <!-- textura -->
+          <circle cx="84" cy="158" r="2.8" fill="rgba(130,62,8,.25)"/>
+          <circle cx="148" cy="148" r="2.2" fill="rgba(130,62,8,.2)"/>
+
+          <!-- Papel saindo da fresta (visível quando fechado, fica entre as metades) -->
+          <g id="paper-closed">
+            <!-- espessura do papel -->
+            <path d="M 130 104 C 155 102, 195 99, 225 97 L 225 112 C 195 114, 155 117, 130 115 Z" fill="#DDD098" opacity=".85"/>
+            <!-- face do papel -->
+            <path d="M 128 96 C 153 94, 195 91, 225 89 L 225 106 C 195 108, 153 111, 128 109 Z" fill="url(#gPaper2)"/>
+            <!-- highlight topo papel -->
+            <path d="M 128 96 C 153 94, 195 91, 225 89 L 225 94 C 195 96, 153 99, 128 101 Z" fill="rgba(255,255,230,.45)"/>
+            <!-- linhas de texto no papel -->
+            <line x1="142" y1="99" x2="218" y2="96" stroke="rgba(80,50,10,.28)" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="142" y1="104" x2="218" y2="101" stroke="rgba(80,50,10,.2)" stroke-width="1.2" stroke-linecap="round"/>
+          </g>
+
+          <!-- Sombra entre as metades (fenda) -->
+          <path d="M 50 108 L 168 108" stroke="rgba(20,6,0,.6)" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+
+        <!-- Partículas de crack -->
+        <div id="cps" style="position:absolute;inset:0;pointer-events:none">
+          <div class="cp" style="width:7px;height:7px;background:#f5c842;--tx:-65px;--ty:-48px;--du:.76s;--dl2:0s"></div>
+          <div class="cp" style="width:5px;height:5px;background:#e8a030;--tx:72px;--ty:-44px;--du:.66s;--dl2:.04s"></div>
+          <div class="cp" style="width:5px;height:5px;background:#ffd060;--tx:-42px;--ty:-70px;--du:.84s;--dl2:.02s"></div>
+          <div class="cp" style="width:6px;height:6px;background:#f5c842;--tx:52px;--ty:-60px;--du:.72s;--dl2:.06s"></div>
+          <div class="cp" style="width:4px;height:4px;background:#d4a012;--tx:-76px;--ty:-16px;--du:.62s;--dl2:.03s"></div>
+          <div class="cp" style="width:5px;height:5px;background:#f0b820;--tx:78px;--ty:-20px;--du:.74s;--dl2:.05s"></div>
+          <div class="cp" style="width:4px;height:4px;background:#ffc040;--tx:20px;--ty:-80px;--du:.86s;--dl2:.01s"></div>
+          <div class="cp" style="width:8px;height:8px;background:#f5c842;--tx:-22px;--ty:-74px;--du:.92s;--dl2:.03s"></div>
+        </div>
+      </div><!-- /cookie-wrap -->
+    </div><!-- /stage -->
+
+    <!-- Paper slip -->
+    <div class="slip" id="slip">
+      <div class="sl-header">✦ &nbsp; Sua Profecia &nbsp; ✦</div>
+      <div class="sl-text" id="sl-text"></div>
+      <div class="sl-div"></div>
+      <div class="sl-days" id="sl-days"></div>
+    </div>
+
+    <!-- expired -->
+    <div class="expired-msg hidden" id="expired-msg">
+      <div class="expired-icon">🍪</div>
+      <div class="expired-text" id="expired-text"></div>
+    </div>
+
+    <!-- tomorrow -->
+    <div class="tomorrow-msg hidden" id="tomorrow-msg">
+      <div class="tomorrow-text">Volte amanhã.</div>
+      <div class="tomorrow-sub">Um novo biscoito espera por você</div>
+    </div>
+
+    <button class="btn hidden" id="open-btn">✦ &nbsp; Abrir Biscoito &nbsp; ✦</button>
+
+  </div>
+</div>
+
+<!-- PWA prompt -->
+<div class="pwa-bar hidden" id="pwa-bar">
+  <div class="pwa-txt"><strong>Instalar App</strong>Salve na tela inicial para não perder seus biscoitos</div>
+  <div class="pwa-actions">
+    <button class="pwa-ok" id="pwa-ok">Instalar</button>
+    <button class="pwa-x" onclick="dismissPwa()">✕</button>
+  </div>
+</div>
+
+<script>
+// ── Frases por faixa de dias ──
+var FRASES = {
+  alto: [  // > 20 000 dias
+    'Ainda lhe restam muitos sóis. A jornada mal começou — construa devagar, mas construa.',
+    'O tempo é um rio largo. Você está na margem mais jovem — navegue com intenção.',
+    'Com tantos dias pela frente, o segredo não é pressa — é direção.',
+    'O herói que começa cedo tem o luxo de errar e recomeçar. Use-o.',
+    'Você tem mais futuros do que memórias. Escolha bem quais semear.'
+  ],
+  medio: [  // 10 000 – 20 000 dias
+    'O meio da jornada é onde os heróis descobrem quem realmente são.',
+    'Metade do caminho trilhado. A segunda metade é onde a sabedoria entra em cena.',
+    'Nem o começo cheio de energia, nem o fim cheio de pressa — agora é a hora do ritmo.',
+    'Os dias que restam valem tanto quanto os que passaram. Faça-os valer.',
+    'Aqui, no meio, é onde as grandes histórias ganham seu núcleo.'
+  ],
+  baixo: [  // 5 000 – 10 000 dias
+    'Cada amanhecer é uma moeda rara. Gaste-a com quem e no que importa.',
+    'A beleza de uma vida bem vivida não está na duração — está na densidade.',
+    'Você chegou longe. Os próximos passos são os mais preciosos.',
+    'A lua que se despede ilumina mais do que a que acabou de nascer.',
+    'Saber que o tempo é finito é o maior dom. Poucos levam isso a sério — você sim.'
+  ],
+  fim: [  // < 5 000 dias
+    'Todo sol que nasce é um presente que poucos reconhecem. Você sabe seu valor.',
+    'Não é sobre quantos dias restam — é sobre a chama que você deixa acesa.',
+    'A sabedoria dos anos é um tesouro que não cabe em baú algum.',
+    'Você atravessou tempestades que outros ainda nem viram no horizonte. Isso vale tudo.',
+    'O tempo conta menos do que a presença. Esteja presente, agora.'
+  ],
+  vencido: 'Este biscoito envelheceu sem ser aberto. Que o de amanhã encontre você pronto. 🍪'
+};
+
+// IBGE expectativa de vida
+var EV = { M: 73.3, F: 80.5, N: 76.9 };
+
+function calcDias(mesNasc, anoNasc, genero) {
+  var hoje = new Date();
+  var anoAtual = hoje.getFullYear();
+  var mesAtual = hoje.getMonth() + 1;
+  // idade em anos (aproximada)
+  var idadeAnos = anoAtual - (2000 + anoNasc);
+  if (mesAtual < mesNasc) idadeAnos--;
+  if (idadeAnos < 0) idadeAnos = 0;
+  var ev = EV[genero] || EV.N;
+  // sobrevida: se já passou da expectativa, acrescenta 6.2 anos bonus
+  var expectativa = ev;
+  if (idadeAnos > ev) expectativa = idadeAnos + 6.2;
+  var diasRestantes = Math.round((expectativa - idadeAnos) * 365.25);
+  if (diasRestantes < 0) diasRestantes = 0;
+  return diasRestantes;
+}
+
+function getFaixaFrases(dias) {
+  if (dias > 20000) return FRASES.alto;
+  if (dias > 10000) return FRASES.medio;
+  if (dias > 5000) return FRASES.baixo;
+  return FRASES.fim;
+}
+
+function getFrase(dias) {
+  var arr = getFaixaFrases(dias);
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function todayKey() {
+  var d = new Date();
+  return d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
+}
+
+function load(k) { try { return localStorage.getItem(k); } catch(e){ return null; } }
+function save(k,v) { try { localStorage.setItem(k,v); } catch(e){} }
+
+// ── Dados de estado ──
+var _gender = null;
+var _deferredInstall = null;
+
+function selGender(g) {
+  _gender = g;
+  document.getElementById('btn-m').className = 'gender-btn' + (g==='M'?' active':'');
+  document.getElementById('btn-f').className = 'gender-btn' + (g==='F'?' active':'');
+}
+
+// Formata input MM/AA
+document.getElementById('inp-data').addEventListener('input', function() {
+  var v = this.value.replace(/\D/g,'');
+  if (v.length > 2) v = v.slice(0,2) + '/' + v.slice(2,4);
+  this.value = v;
+});
+
+function setupConfirm() {
+  var err = document.getElementById('setup-err');
+  err.textContent = '';
+  var raw = document.getElementById('inp-data').value.trim();
+  if (!raw.match(/^\d{2}\/\d{2}$/)) { err.textContent = 'Use o formato MM/AA'; return; }
+  var parts = raw.split('/');
+  var mes = parseInt(parts[0], 10);
+  var ano = parseInt(parts[1], 10);
+  if (mes < 1 || mes > 12) { err.textContent = 'Mês inválido (01-12)'; return; }
+  var anoFull = 2000 + ano;
+  var anoAtual = new Date().getFullYear();
+  if (anoFull > anoAtual) { err.textContent = 'Ano não pode ser futuro'; return; }
+  if (!_gender) { err.textContent = 'Selecione um gênero'; return; }
+
+  save('bsc_mes', mes);
+  save('bsc_ano', ano);
+  save('bsc_gen', _gender);
+
+  showMain(mes, ano, _gender);
+}
+
+function showMain(mes, ano, gen) {
+  document.getElementById('screen-setup').className = 'screen hidden';
+  document.getElementById('screen-main').className = 'screen hidden';
+  // remove "screen" class completely to allow background to show
+  document.getElementById('screen-main').style.position = 'relative';
+  document.getElementById('screen-main').style.background = 'transparent';
+  document.getElementById('screen-main').style.zIndex = '10';
+  document.getElementById('screen-main').className = 'screen hidden';
+  // Actually just show it properly
+  var sm = document.getElementById('screen-main');
+  sm.style.position = '';
+  sm.style.background = '';
+  sm.style.zIndex = '';
+  sm.className = 'screen';
+
+  var dias = calcDias(mes, ano, gen);
+  renderMain(dias);
+
+  // PWA prompt after 3s
+  setTimeout(showPwa, 3000);
+}
+
+function renderMain(dias) {
+  var cookie = document.getElementById('cookie');
+  var slip = document.getElementById('slip');
+  var openBtn = document.getElementById('open-btn');
+  var expiredMsg = document.getElementById('expired-msg');
+  var tomorrowMsg = document.getElementById('tomorrow-msg');
+  var countMsg = document.getElementById('count-msg');
+
+  // Reset state
+  cookie.className = 'cookie-wrap';
+  slip.className = 'slip';
+  openBtn.className = 'btn hidden';
+  expiredMsg.className = 'expired-msg hidden';
+  tomorrowMsg.className = 'tomorrow-msg hidden';
+
+  var today = todayKey();
+  var lastOpened = load('bsc_last_opened');   // YYYY-M-D of last opened
+  var lastCreated = load('bsc_last_created');  // YYYY-M-D of last cookie creation
+
+  // Count message
+  countMsg.innerHTML = '<div class="count-main">Você tem aproximadamente <strong style="color:var(--gold)">' + dias.toLocaleString('pt-BR') + ' biscoitos</strong>, gostaria de abrir o primeiro?</div><div class="count-sub">Um por dia · para sempre</div>';
+
+  // State machine:
+  // 1. Never opened → show cookie, ready to open
+  // 2. Opened today → show result, no button
+  // 3. Yesterday's was not opened (missed) → show expired message
+  // 4. Previous day opened, today's available → show new cookie
+
+  if (!lastCreated) {
+    // First ever visit
+    save('bsc_last_created', today);
+    showCookieReady(dias);
+    return;
+  }
+
+  if (lastOpened === today) {
+    // Already opened today
+    var frase = load('bsc_frase_today') || getFrase(dias);
+    showOpened(frase, dias);
+    showTomorrow();
+    return;
+  }
+
+  // Check if today's cookie is available or if yesterday was missed
+  var created = new Date(lastCreated.replace(/-(\d)-/g,'-0$1-').replace(/-(\d)$/,'-0$1'));
+  var todayD = new Date(today.replace(/-(\d)-/g,'-0$1-').replace(/-(\d)$/,'-0$1'));
+  var diffMs = todayD - created;
+  var diffDays = Math.floor(diffMs / 86400000);
+
+  if (diffDays === 0) {
+    // Same day as creation, not yet opened
+    showCookieReady(dias);
+    return;
+  }
+
+  if (diffDays === 1 && !lastOpened) {
+    // Created yesterday, never opened → expired
+    showExpired(dias);
+    save('bsc_last_created', today);
+    return;
+  }
+
+  if (diffDays >= 1) {
+    // New day → create fresh cookie (previous expired if not opened)
+    save('bsc_last_created', today);
+    if (lastOpened && lastOpened !== lastCreated) {
+      // gap — expired
+      showExpired(dias);
+    } else {
+      showCookieReady(dias);
+    }
+    return;
+  }
+
+  showCookieReady(dias);
+}
+
+function showCookieReady(dias) {
+  var cookie = document.getElementById('cookie');
+  var openBtn = document.getElementById('open-btn');
+  cookie.className = 'cookie-wrap';
+  openBtn.className = 'btn';
+  openBtn.textContent = '✦   Abrir Biscoito   ✦';
+
+  // Bind click+touch
+  var _dias = dias;
+  function doOpen() { openCookie(_dias); }
+  cookie.onclick = doOpen;
+  openBtn.onclick = doOpen;
+  openBtn.addEventListener('touchend', function(e){ e.preventDefault(); doOpen(); }, {passive:false});
+  cookie.addEventListener('touchend', function(e){ e.preventDefault(); doOpen(); }, {passive:false});
+}
+
+function showOpened(frase, dias) {
+  var cookie = document.getElementById('cookie');
+  var slip = document.getElementById('slip');
+  cookie.className = 'cookie-wrap open';
+  document.getElementById('sl-text').textContent = frase;
+  document.getElementById('sl-days').textContent = 'ainda lhe restam, em média, ' + dias.toLocaleString('pt-BR') + ' dias de sol';
+  slip.className = 'slip on';
+}
+
+function showExpired(dias) {
+  var expiredMsg = document.getElementById('expired-msg');
+  var cookie = document.getElementById('cookie');
+  cookie.style.opacity = '0.3';
+  cookie.style.pointerEvents = 'none';
+  expiredMsg.className = 'expired-msg';
+  document.getElementById('expired-text').textContent = FRASES.vencido;
+  showTomorrow();
+}
+
+function showTomorrow() {
+  document.getElementById('tomorrow-msg').className = 'tomorrow-msg';
+}
+
+function openCookie(dias) {
+  var cookie = document.getElementById('cookie');
+  if (cookie.className.indexOf('open') >= 0) return;
+
+  // crack shake first
+  cookie.onclick = null;
+  cookie.className = 'cookie-wrap crack';
+
+  setTimeout(function() {
+    // open animation
+    cookie.className = 'cookie-wrap open';
+
+    // Hide paper-closed element
+    var pc = document.getElementById('paper-closed');
+    if (pc) pc.style.opacity = '0';
+
+    var dias2 = dias;
+    var frase = getFrase(dias2);
+    save('bsc_last_opened', todayKey());
+    save('bsc_frase_today', frase);
+
+    showOpened(frase, dias2);
+    showTomorrow();
+
+    document.getElementById('open-btn').className = 'btn hidden';
+
+    // Restart particles
+    var cps = document.getElementById('cps');
+    var ps = cps.querySelectorAll('.cp');
+    for (var i = 0; i < ps.length; i++) {
+      ps[i].style.animation = 'none';
+      void ps[i].offsetWidth;
+      ps[i].style.animation = '';
+    }
+  }, 460);
+}
+
+// ── Init ──
+(function() {
+  var mes = load('bsc_mes');
+  var ano = load('bsc_ano');
+  var gen = load('bsc_gen');
+  if (mes && ano && gen) {
+    showMain(parseInt(mes,10), parseInt(ano,10), gen);
+  }
+  // else stays on setup screen
+})();
+
+// ── PWA ──
+window.addEventListener('beforeinstallprompt', function(e) {
+  e.preventDefault();
+  _deferredInstall = e;
+});
+
+function showPwa() {
+  if (_deferredInstall && !load('bsc_pwa_dismissed')) {
+    document.getElementById('pwa-bar').className = 'pwa-bar';
+  }
+}
+
+document.getElementById('pwa-ok').addEventListener('click', function() {
+  document.getElementById('pwa-bar').className = 'pwa-bar hidden';
+  if (_deferredInstall) {
+    _deferredInstall.prompt();
+    _deferredInstall.userChoice.then(function() { _deferredInstall = null; });
+  }
+});
+
+function dismissPwa() {
+  save('bsc_pwa_dismissed','1');
+  document.getElementById('pwa-bar').className = 'pwa-bar hidden';
+}
+
+// ── Stars ──
+(function() {
+  var bg = document.getElementById('bg');
+  for (var i = 0; i < 80; i++) {
+    var s = document.createElement('div');
+    s.className = 'star';
+    var z = Math.random() * 2.2 + 0.4;
+    s.style.cssText = 'width:'+z+'px;height:'+z+'px;top:'+Math.random()*100+'%;left:'+Math.random()*100+'%;--d:'+(2+Math.random()*4)+'s;--dl:'+Math.random()*5+'s;--mo:'+(0.3+Math.random()*0.7);
+    bg.appendChild(s);
+  }
+})();
+
+// ── Service Worker ──
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js');
+  });
+}
+
+// ── Ambient particles ──
+(function() {
+  var c = document.getElementById('ac');
+  var cols = ['#f5c842','#d4a012','#e8891a','#7bbfff','#2ecc9b'];
+  for (var i = 0; i < 14; i++) {
+    var p = document.createElement('div');
+    p.className = 'ap';
+    var z = Math.random() * 3 + 1.5;
+    p.style.cssText = 'width:'+z+'px;height:'+z+'px;background:'+cols[Math.floor(Math.random()*cols.length)]+';left:'+(15+Math.random()*70)+'%;bottom:'+Math.random()*20+'%;--d:'+(6+Math.random()*9)+'s;--dl:'+Math.random()*9+'s;--dx:'+((Math.random()-.5)*70)+'px;filter:blur(.3px)';
+    c.appendChild(p);
+  }
+})();
+</script>
+</body>
+</html>
