@@ -93,8 +93,6 @@ body {
 .ring:nth-child(4){inset:-4px;-webkit-animation-delay:1.4s;animation-delay:1.4s;border-color:rgba(245,200,66,.04)}
 @-webkit-keyframes pr{0%{-webkit-transform:scale(.85);opacity:.8}100%{-webkit-transform:scale(1.25);opacity:0}}
 @keyframes pr{0%{transform:scale(.85);opacity:.8}100%{transform:scale(1.25);opacity:0}}
-.orbit{position:absolute;inset:0;-webkit-animation:orb 14s linear infinite;animation:orb 14s linear infinite}
-.rune{position:absolute;font-size:11px;color:var(--gold2);opacity:.3;text-shadow:0 0 8px #ffdf6b;-webkit-animation:rg 3s ease-in-out infinite;animation:rg 3s ease-in-out infinite}
 .rune:nth-child(1){top:5%;left:50%;-webkit-transform:translateX(-50%);transform:translateX(-50%);-webkit-animation-delay:0s;animation-delay:0s}
 .rune:nth-child(2){top:27%;right:4%;-webkit-animation-delay:.5s;animation-delay:.5s}
 .rune:nth-child(3){bottom:27%;right:4%;-webkit-animation-delay:1s;animation-delay:1s}
@@ -172,8 +170,7 @@ body {
 <!-- ── Tela de setup ── -->
 <div class="screen" id="screen-setup">
   <div class="setup-box">
-    <div class="setup-title">Oráculo do Tempo</div>
-    <div class="setup-h">Biscoito da Sorte</div>
+<div class="setup-h">Biscoito da Sorte</div>
     <label class="setup-label" for="inp-data">Mês e ano de nascimento</label>
     <input class="setup-input" id="inp-data" type="text" inputmode="numeric" placeholder="MM/AA" maxlength="5" autocomplete="off">
     <label class="setup-label">Gênero (para expectativa IBGE)</label>
