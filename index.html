@@ -107,34 +107,19 @@ body {
 @-webkit-keyframes rg{0%,100%{opacity:.22}50%{opacity:.82;color:var(--teal);text-shadow:0 0 14px var(--teal)}}
 @keyframes rg{0%,100%{opacity:.22}50%{opacity:.82;color:var(--teal);text-shadow:0 0 14px var(--teal)}}
 
-/* ── Cookie: duas metades ── */
-.cookie-wrap{position:relative;cursor:pointer;width:240px;height:200px;
+/* ── Cookie wrapper ── */
+.cookie-wrap{position:relative;cursor:pointer;width:280px;height:155px;
   filter:drop-shadow(0 0 22px rgba(245,200,66,.5)) drop-shadow(0 14px 36px rgba(0,0,0,.9));
   -webkit-animation:fl 4s ease-in-out infinite;animation:fl 4s ease-in-out infinite;
   -webkit-transition:filter .3s;transition:filter .3s}
 .cookie-wrap:hover{filter:drop-shadow(0 0 40px rgba(245,200,66,1)) drop-shadow(0 16px 46px rgba(0,0,0,.95))}
-@-webkit-keyframes fl{0%,100%{-webkit-transform:translateY(0) rotate(-.5deg)}50%{-webkit-transform:translateY(-12px) rotate(.5deg)}}
-@keyframes fl{0%,100%{transform:translateY(0) rotate(-.5deg)}50%{transform:translateY(-12px) rotate(.5deg)}}
-
-/* metade de cima */
-.half-top{position:absolute;top:0;left:0;width:100%;height:100%;
-  -webkit-transform-origin:center 55%;transform-origin:center 55%;
-  -webkit-transition:-webkit-transform .55s cubic-bezier(.34,1.2,.64,1);
-  transition:transform .55s cubic-bezier(.34,1.2,.64,1)}
-/* metade de baixo */
-.half-bot{position:absolute;top:0;left:0;width:100%;height:100%;
-  -webkit-transform-origin:center 45%;transform-origin:center 45%;
-  -webkit-transition:-webkit-transform .55s cubic-bezier(.34,1.2,.64,1);
-  transition:transform .55s cubic-bezier(.34,1.2,.64,1)}
-
-.cookie-wrap.open .half-top{-webkit-transform:translateY(-42px) rotate(-12deg);transform:translateY(-42px) rotate(-12deg)}
-.cookie-wrap.open .half-bot{-webkit-transform:translateY(38px) rotate(10deg);transform:translateY(38px) rotate(10deg)}
+@-webkit-keyframes fl{0%,100%{-webkit-transform:translateY(0) rotate(-.5deg)}50%{-webkit-transform:translateY(-10px) rotate(.5deg)}}
+@keyframes fl{0%,100%{transform:translateY(0) rotate(-.5deg)}50%{transform:translateY(-10px) rotate(.5deg)}}
 .cookie-wrap.open{-webkit-animation:none;animation:none;cursor:default}
-
 /* crack shake */
 .cookie-wrap.crack{-webkit-animation:cs .44s ease forwards;animation:cs .44s ease forwards;pointer-events:none}
-@-webkit-keyframes cs{0%{-webkit-transform:translateY(0) rotate(0)}15%{-webkit-transform:translateY(-5px) rotate(-3deg)}35%{-webkit-transform:translateY(3px) rotate(3deg)}55%{-webkit-transform:translateY(-2px) rotate(-1.5deg)}80%{-webkit-transform:translateY(2px) rotate(1deg)}100%{-webkit-transform:translateY(0) rotate(0)}}
-@keyframes cs{0%{transform:translateY(0) rotate(0)}15%{transform:translateY(-5px) rotate(-3deg)}35%{transform:translateY(3px) rotate(3deg)}55%{transform:translateY(-2px) rotate(-1.5deg)}80%{transform:translateY(2px) rotate(1deg)}100%{transform:translateY(0) rotate(0)}}
+@-webkit-keyframes cs{0%{-webkit-transform:rotate(0)}15%{-webkit-transform:translateY(-5px) rotate(-3deg)}35%{-webkit-transform:translateY(3px) rotate(3deg)}55%{-webkit-transform:translateY(-2px) rotate(-2deg)}80%{-webkit-transform:translateY(1px) rotate(1deg)}100%{-webkit-transform:rotate(0)}}
+@keyframes cs{0%{transform:rotate(0)}15%{transform:translateY(-5px) rotate(-3deg)}35%{transform:translateY(3px) rotate(3deg)}55%{transform:translateY(-2px) rotate(-2deg)}80%{transform:translateY(1px) rotate(1deg)}100%{transform:rotate(0)}}
 
 /* Partículas */
 .cp{position:absolute;border-radius:50%;top:50%;left:50%;opacity:0;
@@ -220,88 +205,100 @@ body {
         <span class="rune">⚜</span><span class="rune">✦</span><span class="rune">⟡</span>
       </div>
 
-      <!-- Cookie com duas metades separáveis -->
+      <!-- Cookie: SVG real com duas asas que se abrem -->
       <div class="cookie-wrap" id="cookie">
-        <!-- Metade superior -->
-        <svg class="half-top" width="240" height="200" viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg" style="position:absolute;top:0;left:0">
+        <!--
+          Biscoito da sorte — vista frontal, asa esquerda + asa direita.
+          Paths extraídos do SVG original (grupo 5 / objetos).
+          viewBox="40 44 240 133" cobre exatamente o biscoito frontal.
+          As duas asas são <g id="cL"> e <g id="cR">, animadas via JS.
+        -->
+        <svg width="280" height="155" viewBox="40 44 240 133" xmlns="http://www.w3.org/2000/svg" style="display:block;overflow:visible">
           <defs>
-            <radialGradient id="gT" cx="40%" cy="25%" r="70%">
-              <stop offset="0%" stop-color="#F5BE50"/>
-              <stop offset="35%" stop-color="#E0961E"/>
-              <stop offset="70%" stop-color="#C07810"/>
-              <stop offset="100%" stop-color="#8B5208"/>
+            <radialGradient id="gL" cx="68%" cy="30%" r="75%">
+              <stop offset="0%" stop-color="#FFCE94"/>
+              <stop offset="30%" stop-color="#FFB45F"/>
+              <stop offset="65%" stop-color="#D4861A"/>
+              <stop offset="100%" stop-color="#8B4E08"/>
             </radialGradient>
-            <radialGradient id="gTS" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#4A2004"/>
-              <stop offset="100%" stop-color="#1E0A02"/>
+            <radialGradient id="gR" cx="32%" cy="30%" r="75%">
+              <stop offset="0%" stop-color="#FFCE94"/>
+              <stop offset="30%" stop-color="#FFB45F"/>
+              <stop offset="65%" stop-color="#D4861A"/>
+              <stop offset="100%" stop-color="#8B4E08"/>
             </radialGradient>
-          </defs>
-          <!-- lóbulo superior: arco superior do biscoito -->
-          <path d="M 50 108 C 48 90, 44 70, 48 52 C 52 34, 66 22, 82 16 C 98 10, 116 10, 132 16 C 148 22, 160 34, 166 52 C 172 70, 170 90, 168 108 C 155 98, 140 92, 120 90 C 100 88, 80 94, 50 108 Z" fill="url(#gT)"/>
-          <!-- highlight topo -->
-          <path d="M 82 16 C 100 10, 120 10, 138 18 C 152 24, 162 36, 166 52" stroke="#F8E080" stroke-width="3.5" fill="none" stroke-linecap="round" opacity=".8"/>
-          <!-- reflexo -->
-          <ellipse cx="108" cy="52" rx="30" ry="14" fill="rgba(255,240,160,.25)" transform="rotate(-8,108,52)"/>
-          <!-- textura -->
-          <circle cx="72" cy="62" r="3" fill="rgba(140,70,8,.28)"/>
-          <circle cx="148" cy="58" r="2.5" fill="rgba(140,70,8,.22)"/>
-          <circle cx="96" cy="36" r="2" fill="rgba(140,70,8,.2)"/>
-        </svg>
-
-        <!-- Metade inferior -->
-        <svg class="half-bot" width="240" height="200" viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg" style="position:absolute;top:0;left:0">
-          <defs>
-            <radialGradient id="gB" cx="42%" cy="70%" r="70%">
-              <stop offset="0%" stop-color="#E8A030"/>
-              <stop offset="35%" stop-color="#D08020"/>
-              <stop offset="70%" stop-color="#B06818"/>
-              <stop offset="100%" stop-color="#7A4408"/>
+            <radialGradient id="gC" cx="50%" cy="40%" r="60%">
+              <stop offset="0%" stop-color="#F8EEE0"/>
+              <stop offset="100%" stop-color="#DCCFC0"/>
             </radialGradient>
-            <linearGradient id="gPaper2" x1="0%" y1="0%" x2="0%" y2="100%">
+            <linearGradient id="gPap" x1="0%" y1="0%" x2="0%" y2="100%">
               <stop offset="0%" stop-color="#F8F0D8"/>
-              <stop offset="50%" stop-color="#F0E4BC"/>
               <stop offset="100%" stop-color="#DDD098"/>
             </linearGradient>
           </defs>
-          <!-- lóbulo inferior: arco inferior do biscoito -->
-          <path d="M 50 108 C 80 94, 100 88, 120 90 C 140 92, 155 98, 168 108 C 170 124, 168 142, 160 158 C 152 174, 136 184, 120 186 C 104 188, 88 180, 74 168 C 60 156, 52 138, 50 122 C 49 116, 50 112, 50 108 Z" fill="url(#gB)"/>
-          <!-- highlight borda superior da metade de baixo -->
-          <path d="M 50 108 C 80 94, 100 88, 120 90 C 140 92, 155 98, 168 108" stroke="#F8D878" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".7"/>
-          <!-- sombra interna inferior -->
-          <path d="M 74 168 C 60 156, 52 140, 50 124 C 52 136, 56 152, 68 164 Z" fill="rgba(0,0,0,.15)"/>
-          <!-- reflexo -->
-          <ellipse cx="112" cy="144" rx="26" ry="12" fill="rgba(255,230,140,.2)" transform="rotate(5,112,144)"/>
-          <!-- textura -->
-          <circle cx="84" cy="158" r="2.8" fill="rgba(130,62,8,.25)"/>
-          <circle cx="148" cy="148" r="2.2" fill="rgba(130,62,8,.2)"/>
 
-          <!-- Papel saindo da fresta (visível quando fechado, fica entre as metades) -->
-          <g id="paper-closed">
-            <!-- espessura do papel -->
-            <path d="M 130 104 C 155 102, 195 99, 225 97 L 225 112 C 195 114, 155 117, 130 115 Z" fill="#DDD098" opacity=".85"/>
-            <!-- face do papel -->
-            <path d="M 128 96 C 153 94, 195 91, 225 89 L 225 106 C 195 108, 153 111, 128 109 Z" fill="url(#gPaper2)"/>
-            <!-- highlight topo papel -->
-            <path d="M 128 96 C 153 94, 195 91, 225 89 L 225 94 C 195 96, 153 99, 128 101 Z" fill="rgba(255,255,230,.45)"/>
-            <!-- linhas de texto no papel -->
-            <line x1="142" y1="99" x2="218" y2="96" stroke="rgba(80,50,10,.28)" stroke-width="1.6" stroke-linecap="round"/>
-            <line x1="142" y1="104" x2="218" y2="101" stroke="rgba(80,50,10,.2)" stroke-width="1.2" stroke-linecap="round"/>
+          <!-- sombra no chão -->
+          <ellipse cx="163" cy="174" rx="88" ry="8" fill="rgba(0,0,0,.35)"/>
+
+          <!-- ── ASA ESQUERDA ── -->
+          <g id="cL">
+            <path fill="url(#gL)" d="M139.2,135.5c-0.04,2.49-0.4,4-1.14,4.22c-6.23,1.85-86.73-2.79-90.46-13.77
+              c-1.35-3.98,2.95-11.96,9.97-21.36c17.23-23.07,50.8-54.69,57.12-56.56C122.6,45.8,139.5,117.2,139.2,135.5z"/>
+            <!-- highlight interno -->
+            <path fill="#EE7115" opacity=".55" d="M131,134.6c-3.07-0.23-7.05-10.84-10.54-24.19c-1.85-7.03-3.56-14.82-4.93-22.25
+              c-2.96-16.06-4.34-30.46-2.08-31.87c3.75-2.34,8.71,10.34,12.73,26.14c1.93,7.61,3.64,15.94,4.89,23.67
+              C133.7,121.7,134.3,134.8,131,134.6z"/>
+            <!-- brilho -->
+            <path fill="#FFCE94" d="M99.7,73.2c-3.1-3.6-19.3,6.3-14,13.6C91.1,94.2,106.3,80.9,99.7,73.2z"/>
+            <circle fill="#FFCE94" cx="78.5" cy="95.2" r="3.7"/>
+            <!-- detalhe laranja escuro (fenda central) -->
+            <path fill="#EE7115" opacity=".35" d="M139.2,135.5c-0.04,2.49-0.4,4-1.14,4.22c-6.23,1.85-86.73-2.79-90.46-13.77
+              c-1.35-3.98,2.95-11.96,9.97-21.36c-0.64,9.18,0.68,18.74,8.32,20.78c15.5,4.14,23.77-4.13,36.17-1.55
+              C113.8,126.3,128.6,145,139.2,135.5z"/>
           </g>
 
-          <!-- Sombra entre as metades (fenda) -->
-          <path d="M 50 108 L 168 108" stroke="rgba(20,6,0,.6)" stroke-width="3" stroke-linecap="round"/>
+          <!-- ── FAIXA CENTRAL (papel + dobra) ── -->
+          <g id="cC">
+            <path fill="url(#gC)" d="M212.7,73.8c-1.02,8.04-2.79,17.85-4.91,27.21c-0.14,0.65-0.29,1.29-0.44,1.93
+              c-3.38-0.39-7.36-0.77-11.75-1.03c-13.4-0.77-49.72-0.41-64.5,4.17c-3.72,1.15-7.28,2.57-10.61,4.31
+              c-0.18-0.7-0.37-1.41-0.55-2.12c-1.64-6.46-3.15-13.44-4.38-20.13c3.03-1.8,6.62-3.77,10.65-5.73
+              c14.84-7.19,54.95-14.09,76.65-10.81C206.2,72.1,209.5,72.8,212.7,73.8z"/>
+            <path fill="rgba(220,195,160,.5)" d="M207.8,101c-0.14,0.65-0.29,1.29-0.44,1.93c-3.38-0.39-7.36-0.77-11.75-1.03
+              c-13.4-0.77-49.72-0.41-64.5,4.17c-3.72,1.15-7.28,2.57-10.61,4.31c-0.18-0.7-0.37-1.41-0.55-2.12
+              C135,100.5,161.8,94.1,207.8,101z"/>
+            <!-- papel saindo -->
+            <path fill="#DDD098" opacity=".8" d="M168,102c20-1.5,42-2.5,62-0.5l1,14c-20-2-42-1-62,0.5z"/>
+            <path fill="url(#gPap)" d="M166,95c20-1.8,43-2.8,64-0.6l1,15c-21-2.2-44-1.2-65,0.6z"/>
+            <path fill="rgba(255,252,230,.4)" d="M166,95c20-1.8,43-2.8,64-0.6l0.5,4c-21-2.2-44-1.2-65,0.6z"/>
+            <line x1="176" y1="101" x2="228" y2="98" stroke="rgba(80,50,10,.25)" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="176" y1="106" x2="228" y2="103" stroke="rgba(80,50,10,.18)" stroke-width="1.2" stroke-linecap="round"/>
+          </g>
+
+          <!-- ── ASA DIREITA ── -->
+          <g id="cR">
+            <path fill="url(#gR)" d="M186.8,135.5c0.04,2.49,0.4,4,1.14,4.22c6.23,1.85,86.73-2.79,90.46-13.77
+              c1.35-3.98-2.95-11.96-9.97-21.36c-17.23-23.07-50.8-54.69-57.12-56.56C203.5,45.8,186.5,117.2,186.8,135.5z"/>
+            <path fill="#EE7115" opacity=".55" d="M212.7,73.8c-1.09,8.6-3.04,19.21-5.35,29.14c-3.88,16.63-8.77,31.37-12.39,31.64
+              c-3.52,0.26-2.45-15.32,0.64-32.67c1.87-10.49,4.48-21.63,7.26-30.31c3.28-10.27,6.82-17.1,9.65-15.33
+              C214.1,57.3,213.9,64.3,212.7,73.8z"/>
+            <path fill="#FFCE94" d="M226.3,73.2c3.1-3.6,19.3,6.3,14,13.6C235,94.2,219.7,80.9,226.3,73.2z"/>
+            <circle fill="#FFCE94" cx="247.6" cy="95.2" r="3.7"/>
+            <path fill="#EE7115" opacity=".35" d="M186.8,135.5c0.04,2.49,0.4,4,1.14,4.22c6.23,1.85,86.73-2.79,90.46-13.77
+              c1.35-3.98-2.95-11.96-9.97-21.36c0.64,9.18-0.68,18.74-8.32,20.78c-15.5,4.14-23.77-4.13-36.17-1.55
+              C212.2,126.3,197.5,145,186.8,135.5z"/>
+          </g>
         </svg>
 
         <!-- Partículas de crack -->
-        <div id="cps" style="position:absolute;inset:0;pointer-events:none">
-          <div class="cp" style="width:7px;height:7px;background:#f5c842;--tx:-65px;--ty:-48px;--du:.76s;--dl2:0s"></div>
-          <div class="cp" style="width:5px;height:5px;background:#e8a030;--tx:72px;--ty:-44px;--du:.66s;--dl2:.04s"></div>
-          <div class="cp" style="width:5px;height:5px;background:#ffd060;--tx:-42px;--ty:-70px;--du:.84s;--dl2:.02s"></div>
-          <div class="cp" style="width:6px;height:6px;background:#f5c842;--tx:52px;--ty:-60px;--du:.72s;--dl2:.06s"></div>
-          <div class="cp" style="width:4px;height:4px;background:#d4a012;--tx:-76px;--ty:-16px;--du:.62s;--dl2:.03s"></div>
-          <div class="cp" style="width:5px;height:5px;background:#f0b820;--tx:78px;--ty:-20px;--du:.74s;--dl2:.05s"></div>
-          <div class="cp" style="width:4px;height:4px;background:#ffc040;--tx:20px;--ty:-80px;--du:.86s;--dl2:.01s"></div>
-          <div class="cp" style="width:8px;height:8px;background:#f5c842;--tx:-22px;--ty:-74px;--du:.92s;--dl2:.03s"></div>
+        <div id="cps" style="position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none">
+          <div class="cp" style="width:7px;height:7px;background:#f5c842;--tx:-70px;--ty:-38px;--du:.76s;--dl2:0s"></div>
+          <div class="cp" style="width:5px;height:5px;background:#e8a030;--tx:74px;--ty:-34px;--du:.66s;--dl2:.04s"></div>
+          <div class="cp" style="width:5px;height:5px;background:#ffd060;--tx:-44px;--ty:-60px;--du:.84s;--dl2:.02s"></div>
+          <div class="cp" style="width:6px;height:6px;background:#f5c842;--tx:54px;--ty:-52px;--du:.72s;--dl2:.06s"></div>
+          <div class="cp" style="width:4px;height:4px;background:#d4a012;--tx:-80px;--ty:-10px;--du:.62s;--dl2:.03s"></div>
+          <div class="cp" style="width:5px;height:5px;background:#f0b820;--tx:82px;--ty:-14px;--du:.74s;--dl2:.05s"></div>
+          <div class="cp" style="width:4px;height:4px;background:#ffc040;--tx:18px;--ty:-70px;--du:.86s;--dl2:.01s"></div>
+          <div class="cp" style="width:8px;height:8px;background:#f5c842;--tx:-20px;--ty:-66px;--du:.92s;--dl2:.03s"></div>
         </div>
       </div><!-- /cookie-wrap -->
     </div><!-- /stage -->
@@ -311,7 +308,7 @@ body {
       <div class="sl-header">✦ &nbsp; Sua Profecia &nbsp; ✦</div>
       <div class="sl-text" id="sl-text"></div>
       <div class="sl-div"></div>
-      <div class="sl-days" id="sl-days"></div>
+      <div class="sl-days" id="sl-days" style="font-size:10px;letter-spacing:2px;line-height:1.5"></div>
     </div>
 
     <!-- expired -->
@@ -341,37 +338,37 @@ body {
 </div>
 
 <script>
-// ── Frases por faixa de dias ──
+// ── Frases por faixa de biscoitos ──
 var FRASES = {
-  alto: [  // > 20 000 dias
-    'Ainda lhe restam muitos sóis. A jornada mal começou — construa devagar, mas construa.',
-    'O tempo é um rio largo. Você está na margem mais jovem — navegue com intenção.',
-    'Com tantos dias pela frente, o segredo não é pressa — é direção.',
-    'O herói que começa cedo tem o luxo de errar e recomeçar. Use-o.',
-    'Você tem mais futuros do que memórias. Escolha bem quais semear.'
+  alto: [  // > 20 000 biscoitos
+    'Você ainda tem muitos biscoitos pela frente. Abra cada um com intenção.',
+    'Uma coleção enorme de surpresas te espera. A jornada mal começou.',
+    'Com tantos biscoitos ainda guardados, o segredo não é pressa — é escolha.',
+    'Cada biscoito que você abre é uma chance de recomeçar. Use-as.',
+    'Você tem mais biscoitos para abrir do que memórias para contar. Que privilégio.'
   ],
-  medio: [  // 10 000 – 20 000 dias
-    'O meio da jornada é onde os heróis descobrem quem realmente são.',
-    'Metade do caminho trilhado. A segunda metade é onde a sabedoria entra em cena.',
-    'Nem o começo cheio de energia, nem o fim cheio de pressa — agora é a hora do ritmo.',
-    'Os dias que restam valem tanto quanto os que passaram. Faça-os valer.',
-    'Aqui, no meio, é onde as grandes histórias ganham seu núcleo.'
+  medio: [  // 10 000 – 20 000 biscoitos
+    'Você já abriu muitos biscoitos. Os que restam sabem mais.',
+    'No meio da jornada, cada biscoito revela quem você realmente é.',
+    'Nem o começo cheio de energia, nem o fim cheio de pressa — agora é a hora do sabor.',
+    'Os biscoitos que restam valem tanto quanto os que você já abriu. Aproveite-os.',
+    'Aqui, no meio, é onde os biscoitos têm mais recheio.'
   ],
-  baixo: [  // 5 000 – 10 000 dias
-    'Cada amanhecer é uma moeda rara. Gaste-a com quem e no que importa.',
-    'A beleza de uma vida bem vivida não está na duração — está na densidade.',
-    'Você chegou longe. Os próximos passos são os mais preciosos.',
-    'A lua que se despede ilumina mais do que a que acabou de nascer.',
-    'Saber que o tempo é finito é o maior dom. Poucos levam isso a sério — você sim.'
+  baixo: [  // 5 000 – 10 000 biscoitos
+    'Cada biscoito que sobra é uma moeda rara. Abra com quem importa.',
+    'A beleza de uma coleção bem aberta não está na quantidade — está na qualidade.',
+    'Você chegou longe. Os biscoitos que restam são os mais preciosos.',
+    'O biscoito que se despede ilumina mais do que o que acabou de ser recebido.',
+    'Saber que os biscoitos são finitos é o maior presente. Você já entende isso.'
   ],
-  fim: [  // < 5 000 dias
-    'Todo sol que nasce é um presente que poucos reconhecem. Você sabe seu valor.',
-    'Não é sobre quantos dias restam — é sobre a chama que você deixa acesa.',
-    'A sabedoria dos anos é um tesouro que não cabe em baú algum.',
-    'Você atravessou tempestades que outros ainda nem viram no horizonte. Isso vale tudo.',
-    'O tempo conta menos do que a presença. Esteja presente, agora.'
+  fim: [  // < 5 000 biscoitos
+    'Cada biscoito que abre agora é um presente que poucos sabem apreciar. Você sabe.',
+    'Não é sobre quantos biscoitos restam — é sobre a doçura que você deixa para trás.',
+    'A sabedoria de quem abriu tantos biscoitos não cabe em papel algum.',
+    'Você abriu biscoitos que outros ainda nem sonharam receber. Isso vale tudo.',
+    'O biscoito conta menos do que o sorriso ao abri-lo. Sorria agora.'
   ],
-  vencido: 'Este biscoito envelheceu sem ser aberto. Que o de amanhã encontre você pronto. 🍪'
+  vencido: 'Este biscoito passou do prazo sem ser aberto. O de amanhã vai te esperar.'
 };
 
 // IBGE expectativa de vida
@@ -494,7 +491,7 @@ function renderMain(dias) {
   var lastCreated = load('bsc_last_created');  // YYYY-M-D of last cookie creation
 
   // Count message
-  countMsg.innerHTML = '<div class="count-main">Você tem aproximadamente <strong style="color:var(--gold)">' + dias.toLocaleString('pt-BR') + ' biscoitos</strong>, gostaria de abrir o primeiro?</div><div class="count-sub">Um por dia · para sempre</div>';
+  countMsg.innerHTML = '<div class="count-main">Você tem aproximadamente <strong style="color:var(--gold)">' + dias.toLocaleString('pt-BR') + ' biscoitos</strong> para abrir, gostaria de começar pelo de hoje?</div><div class="count-sub">Um biscoito por dia · não perca nenhum</div>';
 
   // State machine:
   // 1. Never opened → show cookie, ready to open
@@ -572,7 +569,7 @@ function showOpened(frase, dias) {
   var slip = document.getElementById('slip');
   cookie.className = 'cookie-wrap open';
   document.getElementById('sl-text').textContent = frase;
-  document.getElementById('sl-days').textContent = 'ainda lhe restam, em média, ' + dias.toLocaleString('pt-BR') + ' dias de sol';
+  document.getElementById('sl-days').textContent = 'você ainda tem ' + dias.toLocaleString('pt-BR') + ' biscoitos para abrir';
   slip.className = 'slip on';
 }
 
@@ -599,12 +596,15 @@ function openCookie(dias) {
   cookie.className = 'cookie-wrap crack';
 
   setTimeout(function() {
-    // open animation
     cookie.className = 'cookie-wrap open';
 
-    // Hide paper-closed element
-    var pc = document.getElementById('paper-closed');
-    if (pc) pc.style.opacity = '0';
+    // Anima asas: esquerda vai pra esquerda, direita vai pra direita
+    var gL = document.getElementById('cL');
+    var gR = document.getElementById('cR');
+    var gC = document.getElementById('cC');
+    if (gL) { gL.style.webkitTransition = 'transform .6s cubic-bezier(.34,1.2,.64,1)'; gL.style.transition = 'transform .6s cubic-bezier(.34,1.2,.64,1)'; gL.style.transformBox = 'fill-box'; gL.style.transformOrigin = 'right center'; gL.style.transform = 'translateX(-60px) translateY(-12px) rotate(-14deg)'; }
+    if (gR) { gR.style.webkitTransition = 'transform .6s cubic-bezier(.34,1.2,.64,1)'; gR.style.transition = 'transform .6s cubic-bezier(.34,1.2,.64,1)'; gR.style.transformBox = 'fill-box'; gR.style.transformOrigin = 'left center'; gR.style.transform = 'translateX(60px) translateY(-12px) rotate(14deg)'; }
+    if (gC) { gC.style.webkitTransition = 'opacity .4s ease .2s'; gC.style.transition = 'opacity .4s ease .2s'; gC.style.opacity = '0'; }
 
     var dias2 = dias;
     var frase = getFrase(dias2);
