@@ -3,207 +3,254 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#0d0a06">
+<meta name="theme-color" content="#8e1f14">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Biscoito">
+<meta name="description" content="Um biscoito da sorte por dia, contado pela sua expectativa de vida. Abra o de hoje — ele não volta amanhã.">
 <link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" href="icon-192.png">
 <title>Biscoito da Sorte</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Pro:ital,wght@0,400;1,300;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap');
 
 :root {
-  --gold:#f5c842; --gold2:#d4a012; --gold3:#8b6500;
-  --amber:#e8891a; --teal:#2ecc9b; --bg:#0d0a06;
-  --parchment:#f5ecd4; --brown:#5c3010;
+  --laca: #8e1f14;
+  --laca2: #6d150d;
+  --gold: #f5c842;
+  --gold2: #d4a012;
+  --gold3: #8b6500;
+  --paper: #f7efdc;
+  --paper2: #efe3c8;
+  --tinta: #b3372b;       /* vermelho clássico do papelzinho */
+  --tinta-suave: #8a5a3a;
 }
 
-*{margin:0;padding:0;box-sizing:border-box}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { height: 100%; }
 
 body {
-  min-height:100vh;
-  background:var(--bg);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Cinzel',serif;
-  overflow:hidden;
-  -webkit-tap-highlight-color:transparent;
-}
-
-/* ── Fundo estrelado ── */
-.bg{position:fixed;inset:0;z-index:0;
+  min-height: 100vh;
   background:
-    radial-gradient(ellipse at 20% 30%,rgba(74,144,217,.08) 0%,transparent 55%),
-    radial-gradient(ellipse at 80% 70%,rgba(155,89,182,.07) 0%,transparent 55%),
-    #0d0a06;
+    radial-gradient(ellipse at 50% -10%, rgba(255, 210, 120, 0.16) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 115%, rgba(0, 0, 0, 0.45) 0%, transparent 60%),
+    linear-gradient(180deg, var(--laca) 0%, var(--laca2) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cinzel', Georgia, serif;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  color: var(--paper);
 }
-.star{position:absolute;border-radius:50%;background:#fff;
-  -webkit-animation:tw var(--d,3s) ease-in-out infinite var(--dl,0s);
-  animation:tw var(--d,3s) ease-in-out infinite var(--dl,0s)}
-@-webkit-keyframes tw{0%,100%{opacity:.07;-webkit-transform:scale(1)}50%{opacity:var(--mo,.7);-webkit-transform:scale(1.4)}}
-@keyframes tw{0%,100%{opacity:.07;transform:scale(1)}50%{opacity:var(--mo,.7);transform:scale(1.4)}}
 
-/* ── Partículas ambientais ── */
-.ap{position:fixed;border-radius:50%;pointer-events:none;
-  -webkit-animation:afp var(--d,8s) ease-in-out infinite var(--dl,0s);
-  animation:afp var(--d,8s) ease-in-out infinite var(--dl,0s);opacity:0}
-@-webkit-keyframes afp{0%,100%{-webkit-transform:translateY(0) scale(1);opacity:0}20%{opacity:.8}80%{opacity:.4}100%{-webkit-transform:translateY(-140px) translateX(var(--dx,0px)) scale(.15);opacity:0}}
-@keyframes afp{0%,100%{transform:translateY(0) scale(1);opacity:0}20%{opacity:.8}80%{opacity:.4}100%{transform:translateY(-140px) translateX(var(--dx,0px)) scale(.15);opacity:0}}
+/* ── Flecos dourados flutuando ── */
+.fleck {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  -webkit-animation: rise var(--d, 9s) ease-in-out infinite var(--dl, 0s);
+  animation: rise var(--d, 9s) ease-in-out infinite var(--dl, 0s);
+}
+@-webkit-keyframes rise { 0%,100% { -webkit-transform: translateY(0) scale(1); opacity: 0; } 20% { opacity: .7; } 80% { opacity: .3; } 100% { -webkit-transform: translateY(-160px) translateX(var(--dx, 0px)) scale(.2); opacity: 0; } }
+@keyframes rise { 0%,100% { transform: translateY(0) scale(1); opacity: 0; } 20% { opacity: .7; } 80% { opacity: .3; } 100% { transform: translateY(-160px) translateX(var(--dx, 0px)) scale(.2); opacity: 0; } }
 
-@-webkit-keyframes up{from{opacity:0;-webkit-transform:translateY(14px)}to{opacity:1;-webkit-transform:none}}
-@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@-webkit-keyframes up { from { opacity: 0; -webkit-transform: translateY(14px); } to { opacity: 1; -webkit-transform: none; } }
+@keyframes up { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 
 /* ── Screens ── */
-.screen{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;background:var(--bg)}
-.screen.hidden{display:none}
+.screen { position: fixed; inset: 0; z-index: 20; display: flex; align-items: center; justify-content: center; padding: 18px; }
+.screen.hidden { display: none; }
 
-/* ── Tela de setup ── */
-.setup-box{background:rgba(20,12,4,.92);border:1px solid rgba(245,200,66,.18);border-radius:8px;padding:36px 28px;width:min(340px,92vw);text-align:center;box-shadow:0 0 60px rgba(245,200,66,.08);}
-.setup-title{font-size:11px;letter-spacing:4px;color:var(--gold2);text-transform:uppercase;opacity:.6;margin-bottom:6px}
-.setup-h{font-size:22px;font-weight:900;letter-spacing:4px;text-transform:uppercase;background:linear-gradient(180deg,#ffdf6b 0%,#d4a012 55%,#e8891a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:28px}
-.setup-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(245,200,66,.45);text-align:left;margin-bottom:8px;display:block}
-.setup-input{width:100%;background:rgba(245,200,66,.05);border:1px solid rgba(245,200,66,.2);color:var(--parchment);font-family:'Cinzel',serif;font-size:18px;letter-spacing:4px;text-align:center;padding:12px;border-radius:3px;outline:none;margin-bottom:20px;-webkit-appearance:none}
-.setup-input:focus{border-color:rgba(245,200,66,.5);background:rgba(245,200,66,.08)}
-.setup-input::-webkit-input-placeholder{color:rgba(245,200,66,.25);font-size:14px}
-.setup-input::placeholder{color:rgba(245,200,66,.25);font-size:14px}
-.gender-row{display:flex;gap:12px;margin-bottom:24px}
-.gender-btn{flex:1;padding:10px 6px;border:1px solid rgba(245,200,66,.2);background:rgba(245,200,66,.04);color:rgba(245,200,66,.5);font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;border-radius:3px;cursor:pointer;-webkit-transition:all .2s;transition:all .2s;-webkit-tap-highlight-color:transparent}
-.gender-btn.active{border-color:var(--gold);background:rgba(245,200,66,.14);color:var(--gold)}
-.setup-btn{width:100%;font-family:'Cinzel',serif;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--bg);background:linear-gradient(180deg,#ffdf6b 0%,#d4a012 55%,#e8891a 100%);border:none;padding:14px;border-radius:2px;cursor:pointer;box-shadow:0 0 0 1px var(--gold3),0 4px 14px rgba(245,200,66,.3);-webkit-transition:all .2s;transition:all .2s}
-.setup-btn:active{-webkit-transform:translateY(1px);transform:translateY(1px)}
-.setup-err{font-size:10px;letter-spacing:2px;color:#e84040;margin-top:10px;min-height:16px;text-transform:uppercase}
+/* ── Setup ── */
+.setup-box {
+  background: rgba(60, 12, 6, 0.55);
+  border: 1px solid rgba(245, 200, 66, 0.28);
+  box-shadow: 0 0 0 4px rgba(60, 12, 6, 0.25), 0 18px 60px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 34px 28px;
+  width: min(360px, 94vw);
+  text-align: center;
+  -webkit-animation: up .7s ease both;
+  animation: up .7s ease both;
+}
+.setup-cookie { width: 84px; height: 84px; margin: 0 auto 10px; display: block; filter: drop-shadow(0 8px 18px rgba(0,0,0,.45)); }
+.setup-h {
+  font-size: 24px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase;
+  background: linear-gradient(180deg, #ffdf6b 0%, #d4a012 60%, #e8891a 100%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+.setup-sub { font-family: 'Crimson Pro', serif; font-style: italic; font-size: 15px; line-height: 1.55; color: rgba(247, 239, 220, 0.85); margin-bottom: 26px; }
+.setup-label { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: rgba(245, 200, 66, 0.7); text-align: left; margin-bottom: 8px; display: block; }
+.setup-input {
+  width: 100%; background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(245, 200, 66, 0.35);
+  color: var(--paper); font-family: 'Cinzel', serif; font-size: 20px; letter-spacing: 5px;
+  text-align: center; padding: 12px; border-radius: 6px; outline: none; margin-bottom: 20px; -webkit-appearance: none;
+}
+.setup-input:focus { border-color: var(--gold); background: rgba(0, 0, 0, 0.35); }
+.setup-input::placeholder { color: rgba(247, 239, 220, 0.3); font-size: 15px; letter-spacing: 2px; }
+.gender-row { display: flex; gap: 8px; margin-bottom: 24px; }
+.gender-btn {
+  flex: 1; padding: 11px 4px; border: 1px solid rgba(245, 200, 66, 0.3); background: rgba(0, 0, 0, 0.18);
+  color: rgba(247, 239, 220, 0.65); font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 1px;
+  border-radius: 6px; cursor: pointer; transition: all .2s; -webkit-tap-highlight-color: transparent;
+}
+.gender-btn.active { border-color: var(--gold); background: rgba(245, 200, 66, 0.16); color: var(--gold); }
+.btn-gold {
+  width: 100%; font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+  color: #4a1206; background: linear-gradient(180deg, #ffdf6b 0%, #d4a012 60%, #e8891a 100%);
+  border: none; padding: 15px; border-radius: 6px; cursor: pointer;
+  box-shadow: 0 0 0 1px var(--gold3), 0 6px 18px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transition: transform .15s;
+}
+.btn-gold:active { transform: translateY(1px); }
+.setup-err { font-size: 10px; letter-spacing: 2px; color: #ffd0c5; margin-top: 12px; min-height: 16px; text-transform: uppercase; }
 
-/* ── Tela principal ── */
-.scene{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;gap:20px;padding:20px 16px}
+/* ── Cena principal ── */
+.scene { position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 16px; width: 100%; max-width: 420px; }
 
-.title-h{font-size:clamp(16px,3.5vw,24px);font-weight:900;letter-spacing:6px;text-transform:uppercase;text-align:center;background:linear-gradient(180deg,#ffdf6b 0%,#d4a012 55%,#e8891a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 10px rgba(245,200,66,.35));-webkit-animation:up 1s ease both;animation:up 1s ease both}
+.title-h {
+  font-size: clamp(17px, 4vw, 26px); font-weight: 900; letter-spacing: 5px; text-transform: uppercase; text-align: center;
+  background: linear-gradient(180deg, #ffdf6b 0%, #d4a012 60%, #e8891a 100%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+  -webkit-animation: up .8s ease both; animation: up .8s ease both;
+}
+.title-orn { display: block; text-align: center; color: rgba(245, 200, 66, 0.55); font-size: 11px; letter-spacing: 8px; margin-top: 4px; }
 
-/* ── Mensagem de contagem / estado ── */
-.count-msg{text-align:center;max-width:300px;-webkit-animation:up .8s ease .2s both;animation:up .8s ease .2s both}
-.count-main{font-family:'Crimson Pro',serif;font-style:italic;font-size:15px;line-height:1.6;color:var(--parchment);margin-bottom:6px}
-.count-sub{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(245,200,66,.35)}
+/* ── Contadores ── */
+.tally {
+  display: flex; gap: 8px; -webkit-animation: up .8s ease .15s both; animation: up .8s ease .15s both;
+  font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
+}
+.tally span {
+  background: rgba(0, 0, 0, 0.28); border: 1px solid rgba(245, 200, 66, 0.22);
+  border-radius: 999px; padding: 7px 13px; color: rgba(247, 239, 220, 0.8);
+}
+.tally b { color: var(--gold); font-weight: 700; }
 
-/* ── Stage do biscoito ── */
-.stage{position:relative;width:300px;height:240px;display:flex;align-items:center;justify-content:center;-webkit-animation:up 1s ease .3s both;animation:up 1s ease .3s both}
-.aura{position:absolute;inset:30px;border-radius:50%;background:radial-gradient(circle,rgba(245,200,66,.16) 0%,rgba(232,137,26,.05) 45%,transparent 70%);-webkit-animation:pa 3.5s ease-in-out infinite;animation:pa 3.5s ease-in-out infinite}
-@-webkit-keyframes pa{0%,100%{-webkit-transform:scale(1);opacity:.7}50%{-webkit-transform:scale(1.08);opacity:1}}
-@keyframes pa{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.08);opacity:1}}
-.ring{position:absolute;border-radius:50%;border:1px solid rgba(245,200,66,.11);-webkit-animation:pr 3.5s ease-out infinite;animation:pr 3.5s ease-out infinite}
-.ring:nth-child(2){inset:40px;-webkit-animation-delay:0s;animation-delay:0s}
-.ring:nth-child(3){inset:18px;-webkit-animation-delay:.7s;animation-delay:.7s;border-color:rgba(245,200,66,.06)}
-.ring:nth-child(4){inset:-4px;-webkit-animation-delay:1.4s;animation-delay:1.4s;border-color:rgba(245,200,66,.04)}
-@-webkit-keyframes pr{0%{-webkit-transform:scale(.85);opacity:.8}100%{-webkit-transform:scale(1.25);opacity:0}}
-@keyframes pr{0%{transform:scale(.85);opacity:.8}100%{transform:scale(1.25);opacity:0}}
-.rune:nth-child(1){top:5%;left:50%;-webkit-transform:translateX(-50%);transform:translateX(-50%);-webkit-animation-delay:0s;animation-delay:0s}
-.rune:nth-child(2){top:27%;right:4%;-webkit-animation-delay:.5s;animation-delay:.5s}
-.rune:nth-child(3){bottom:27%;right:4%;-webkit-animation-delay:1s;animation-delay:1s}
-.rune:nth-child(4){bottom:5%;left:50%;-webkit-transform:translateX(-50%);transform:translateX(-50%);-webkit-animation-delay:1.5s;animation-delay:1.5s}
-.rune:nth-child(5){bottom:27%;left:4%;-webkit-animation-delay:2s;animation-delay:2s}
-.rune:nth-child(6){top:27%;left:4%;-webkit-animation-delay:2.5s;animation-delay:2.5s}
-@-webkit-keyframes orb{from{-webkit-transform:rotate(0)}to{-webkit-transform:rotate(360deg)}}
-@keyframes orb{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-@-webkit-keyframes rg{0%,100%{opacity:.22}50%{opacity:.82;color:var(--teal);text-shadow:0 0 14px var(--teal)}}
-@keyframes rg{0%,100%{opacity:.22}50%{opacity:.82;color:var(--teal);text-shadow:0 0 14px var(--teal)}}
+/* ── Stage ── */
+.stage { position: relative; width: 300px; height: 215px; display: flex; align-items: center; justify-content: center; -webkit-animation: up .9s ease .25s both; animation: up .9s ease .25s both; }
+.glow { position: absolute; inset: 18px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 214, 110, 0.22) 0%, rgba(232, 137, 26, 0.07) 50%, transparent 72%); -webkit-animation: pulse 3.5s ease-in-out infinite; animation: pulse 3.5s ease-in-out infinite; }
+@-webkit-keyframes pulse { 0%,100% { -webkit-transform: scale(1); opacity: .75; } 50% { -webkit-transform: scale(1.07); opacity: 1; } }
+@keyframes pulse { 0%,100% { transform: scale(1); opacity: .75; } 50% { transform: scale(1.07); opacity: 1; } }
 
-/* ── Cookie wrapper ── */
-.cookie-wrap{position:relative;cursor:pointer;width:280px;height:155px;
-  filter:drop-shadow(0 0 22px rgba(245,200,66,.5)) drop-shadow(0 14px 36px rgba(0,0,0,.9));
-  -webkit-animation:fl 4s ease-in-out infinite;animation:fl 4s ease-in-out infinite;
-  -webkit-transition:filter .3s;transition:filter .3s}
-.cookie-wrap:hover{filter:drop-shadow(0 0 40px rgba(245,200,66,1)) drop-shadow(0 16px 46px rgba(0,0,0,.95))}
-@-webkit-keyframes fl{0%,100%{-webkit-transform:translateY(0) rotate(-.5deg)}50%{-webkit-transform:translateY(-10px) rotate(.5deg)}}
-@keyframes fl{0%,100%{transform:translateY(0) rotate(-.5deg)}50%{transform:translateY(-10px) rotate(.5deg)}}
-.cookie-wrap.open{-webkit-animation:none;animation:none;cursor:default}
-/* crack shake */
-.cookie-wrap.crack{-webkit-animation:cs .44s ease forwards;animation:cs .44s ease forwards;pointer-events:none}
-@-webkit-keyframes cs{0%{-webkit-transform:rotate(0)}15%{-webkit-transform:translateY(-5px) rotate(-3deg)}35%{-webkit-transform:translateY(3px) rotate(3deg)}55%{-webkit-transform:translateY(-2px) rotate(-2deg)}80%{-webkit-transform:translateY(1px) rotate(1deg)}100%{-webkit-transform:rotate(0)}}
-@keyframes cs{0%{transform:rotate(0)}15%{transform:translateY(-5px) rotate(-3deg)}35%{transform:translateY(3px) rotate(3deg)}55%{transform:translateY(-2px) rotate(-2deg)}80%{transform:translateY(1px) rotate(1deg)}100%{transform:rotate(0)}}
+.cookie-wrap {
+  position: relative; cursor: pointer; width: 280px; height: 155px;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.35)) drop-shadow(0 16px 34px rgba(0, 0, 0, 0.5));
+  -webkit-animation: floaty 4s ease-in-out infinite; animation: floaty 4s ease-in-out infinite;
+  transition: transform .25s;
+}
+.cookie-wrap:hover { transform: scale(1.03); }
+@-webkit-keyframes floaty { 0%,100% { -webkit-transform: translateY(0) rotate(-.5deg); } 50% { -webkit-transform: translateY(-9px) rotate(.5deg); } }
+@keyframes floaty { 0%,100% { transform: translateY(0) rotate(-.5deg); } 50% { transform: translateY(-9px) rotate(.5deg); } }
+.cookie-wrap.open { -webkit-animation: none; animation: none; cursor: default; }
+.cookie-wrap.crack { -webkit-animation: shake .44s ease forwards; animation: shake .44s ease forwards; pointer-events: none; }
+@-webkit-keyframes shake { 0% { -webkit-transform: rotate(0); } 15% { -webkit-transform: translateY(-5px) rotate(-3deg); } 35% { -webkit-transform: translateY(3px) rotate(3deg); } 55% { -webkit-transform: translateY(-2px) rotate(-2deg); } 80% { -webkit-transform: translateY(1px) rotate(1deg); } 100% { -webkit-transform: rotate(0); } }
+@keyframes shake { 0% { transform: rotate(0); } 15% { transform: translateY(-5px) rotate(-3deg); } 35% { transform: translateY(3px) rotate(3deg); } 55% { transform: translateY(-2px) rotate(-2deg); } 80% { transform: translateY(1px) rotate(1deg); } 100% { transform: rotate(0); } }
 
-/* Partículas */
-.cp{position:absolute;border-radius:50%;top:50%;left:50%;opacity:0;
-  -webkit-animation:cpf var(--du,.8s) ease-out forwards var(--dl2,0s);
-  animation:cpf var(--du,.8s) ease-out forwards var(--dl2,0s)}
-@-webkit-keyframes cpf{0%{-webkit-transform:translate(-50%,-50%) scale(1);opacity:1}100%{-webkit-transform:translate(calc(-50% + var(--tx)),calc(-50% + var(--ty))) scale(0);opacity:0}}
-@keyframes cpf{0%{transform:translate(-50%,-50%) scale(1);opacity:1}100%{transform:translate(calc(-50% + var(--tx)),calc(-50% + var(--ty))) scale(0);opacity:0}}
+.hint-tap { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: rgba(245, 200, 66, 0.6); text-align: center; -webkit-animation: up 1s ease .5s both; animation: up 1s ease .5s both; }
 
-/* ── Fortune slip ── */
-.slip{width:min(285px,88vw);background:var(--parchment);border:1px solid rgba(200,155,30,.4);border-radius:3px;padding:18px 22px;text-align:center;box-shadow:0 0 0 1px rgba(245,200,66,.15),0 6px 24px rgba(0,0,0,.65),inset 0 0 30px rgba(245,200,66,.04);display:none;position:relative;-webkit-animation:up .8s ease .2s both;animation:up .8s ease .2s both}
-.slip.on{display:block;-webkit-animation:sr .55s cubic-bezier(.34,1.56,.64,1) both;animation:sr .55s cubic-bezier(.34,1.56,.64,1) both}
-@-webkit-keyframes sr{from{opacity:0;-webkit-transform:scaleY(.15) translateY(-8px)}to{opacity:1;-webkit-transform:none}}
-@keyframes sr{from{opacity:0;transform:scaleY(.15) translateY(-8px)}to{opacity:1;transform:none}}
-.slip::before,.slip::after{content:'✦';position:absolute;color:var(--gold2);font-size:9px;top:7px}
-.slip::before{left:9px}.slip::after{right:9px}
-.sl-text{font-family:'Crimson Pro',serif;font-style:italic;font-size:15px;line-height:1.7;color:var(--brown);margin-bottom:14px}
-.sl-div{width:40px;height:1px;background:linear-gradient(90deg,transparent,var(--gold2),transparent);margin:0 auto 10px}
-.sl-days{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold3);font-family:'Cinzel',serif;opacity:.8}
+/* Migalhas do crack */
+.cp { position: absolute; border-radius: 50%; top: 50%; left: 50%; opacity: 0; -webkit-animation: cpf var(--du, .8s) ease-out forwards var(--dl2, 0s); animation: cpf var(--du, .8s) ease-out forwards var(--dl2, 0s); }
+@-webkit-keyframes cpf { 0% { -webkit-transform: translate(-50%, -50%) scale(1); opacity: 1; } 100% { -webkit-transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0); opacity: 0; } }
+@keyframes cpf { 0% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0); opacity: 0; } }
 
-/* ── Botão ── */
-.btn{font-family:'Cinzel',serif;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--bg);background:linear-gradient(180deg,#ffdf6b 0%,#d4a012 55%,#e8891a 100%);border:none;padding:13px 28px;border-radius:2px;cursor:pointer;position:relative;overflow:hidden;box-shadow:0 0 0 1px var(--gold3),0 4px 14px rgba(245,200,66,.3),inset 0 1px 0 rgba(255,255,255,.3);-webkit-transition:all .3s;transition:all .3s;-webkit-animation:up 1s ease .5s both;animation:up 1s ease .5s both;-webkit-tap-highlight-color:transparent}
-.btn:active{-webkit-transform:translateY(1px);transform:translateY(1px)}
-.btn.hidden{display:none}
+/* ── O papelzinho clássico ── */
+.slip {
+  width: min(320px, 92vw);
+  background: linear-gradient(180deg, var(--paper) 0%, var(--paper2) 100%);
+  border-radius: 4px;
+  padding: 20px 22px 16px;
+  text-align: center;
+  box-shadow: 0 2px 0 rgba(255, 255, 255, 0.25) inset, 0 14px 34px rgba(0, 0, 0, 0.55);
+  display: none;
+  position: relative;
+}
+.slip.on { display: block; -webkit-animation: slipIn .6s cubic-bezier(.34, 1.45, .64, 1) both; animation: slipIn .6s cubic-bezier(.34, 1.45, .64, 1) both; }
+@-webkit-keyframes slipIn { from { opacity: 0; -webkit-transform: scaleY(.2) translateY(-14px); } to { opacity: 1; -webkit-transform: none; } }
+@keyframes slipIn { from { opacity: 0; transform: scaleY(.2) translateY(-14px); } to { opacity: 1; transform: none; } }
+/* moldura dupla clássica em tinta vermelha */
+.slip::before {
+  content: ""; position: absolute; inset: 6px;
+  border: 1px solid rgba(179, 55, 43, 0.55);
+  box-shadow: 0 0 0 3px transparent, inset 0 0 0 0 transparent;
+  outline: 1px solid rgba(179, 55, 43, 0.25);
+  outline-offset: 3px;
+  border-radius: 2px;
+  pointer-events: none;
+}
+.sl-header { font-size: 8px; letter-spacing: 4px; text-transform: uppercase; color: var(--tinta); margin-bottom: 12px; font-weight: 700; }
+.sl-text { font-family: 'Crimson Pro', serif; font-size: 16.5px; line-height: 1.65; color: #4a2c18; margin-bottom: 14px; font-style: italic; }
+.sl-lucky-label { font-size: 7.5px; letter-spacing: 3px; text-transform: uppercase; color: var(--tinta); opacity: .85; margin-bottom: 5px; }
+.sl-lucky { font-family: 'Crimson Pro', serif; font-weight: 600; font-size: 15px; letter-spacing: 6px; color: var(--tinta); margin-bottom: 12px; }
+.sl-days { font-size: 8px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--tinta-suave); }
 
-/* ── hidden global ── */
-.hidden{display:none!important}
+/* ── Rodapé de estado ── */
+.state-row { text-align: center; -webkit-animation: up .7s ease .2s both; animation: up .7s ease .2s both; }
+.state-note { font-family: 'Crimson Pro', serif; font-style: italic; font-size: 14px; color: rgba(247, 239, 220, 0.75); }
+.state-count { font-family: 'Crimson Pro', serif; font-size: 26px; color: var(--gold); letter-spacing: .1em; margin-top: 2px; }
+.state-lost { font-size: 8.5px; letter-spacing: 2px; text-transform: uppercase; color: rgba(247, 239, 220, 0.45); margin-top: 8px; }
 
-/* ── Mensagem biscoito vencido ── */
-.expired-msg{text-align:center;max-width:280px;padding:16px 0;-webkit-animation:up .7s ease .2s both;animation:up .7s ease .2s both}
-.expired-text{font-family:'Crimson Pro',serif;font-style:italic;font-size:15px;line-height:1.7;color:rgba(245,200,66,.55)}
+.hidden { display: none !important; }
 
-/* ── Mensagem "volte amanhã" ── */
-.tomorrow-msg{text-align:center;max-width:280px;padding:12px 0;-webkit-animation:up .7s ease .2s both;animation:up .7s ease .2s both}
-.tomorrow-text{font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:rgba(245,200,66,.45)}
-.tomorrow-count{font-family:'Crimson Pro',serif;font-size:28px;color:rgba(245,200,66,.7);letter-spacing:.08em;margin-top:4px}
+/* ── PWA bar ── */
+.pwa-bar { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(50, 10, 4, 0.96); border-top: 1px solid rgba(245, 200, 66, 0.2); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; z-index: 50; -webkit-animation: slideup .4s ease both; animation: slideup .4s ease both; }
+@-webkit-keyframes slideup { from { -webkit-transform: translateY(100%); } to { -webkit-transform: none; } }
+@keyframes slideup { from { transform: translateY(100%); } to { transform: none; } }
+.pwa-txt { font-size: 10px; letter-spacing: 1px; color: rgba(247, 239, 220, 0.7); line-height: 1.4; }
+.pwa-txt strong { color: var(--gold); display: block; font-size: 11px; letter-spacing: 2px; }
+.pwa-actions { display: flex; gap: 8px; flex-shrink: 0; }
+.pwa-ok { font-family: 'Cinzel', serif; font-size: 9px; font-weight: 700; letter-spacing: 2px; color: #4a1206; background: var(--gold); border: none; padding: 8px 14px; border-radius: 4px; cursor: pointer; }
+.pwa-x { font-family: 'Cinzel', serif; font-size: 9px; color: rgba(247, 239, 220, 0.5); background: transparent; border: 1px solid rgba(245, 200, 66, 0.2); padding: 8px 10px; border-radius: 4px; cursor: pointer; }
 
-/* PWA prompt */
-.pwa-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(20,12,4,.96);border-top:1px solid rgba(245,200,66,.15);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;z-index:50;-webkit-animation:slideup .4s ease both;animation:slideup .4s ease both}
-@-webkit-keyframes slideup{from{-webkit-transform:translateY(100%)}to{-webkit-transform:none}}
-@keyframes slideup{from{transform:translateY(100%)}to{transform:none}}
-.pwa-txt{font-size:10px;letter-spacing:1px;color:rgba(245,200,66,.6);line-height:1.4}
-.pwa-txt strong{color:var(--gold);display:block;font-size:11px;letter-spacing:2px}
-.pwa-actions{display:flex;gap:8px;flex-shrink:0}
-.pwa-ok{font-family:'Cinzel',serif;font-size:9px;font-weight:700;letter-spacing:2px;color:var(--bg);background:var(--gold);border:none;padding:8px 14px;border-radius:2px;cursor:pointer}
-.pwa-x{font-family:'Cinzel',serif;font-size:9px;color:rgba(245,200,66,.4);background:transparent;border:1px solid rgba(245,200,66,.15);padding:8px 10px;border-radius:2px;cursor:pointer}
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
 </style>
 <script data-goatcounter="https://biscoitosorte.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
-<div class="bg" id="bg"></div>
-<div id="ac" style="position:fixed;inset:0;pointer-events:none;z-index:5"></div>
+<div id="flecks" style="position:fixed;inset:0;pointer-events:none;z-index:5"></div>
 
-<!-- ── Tela de setup ── -->
+<!-- ── Setup ── -->
 <div class="screen" id="screen-setup">
   <div class="setup-box">
-<div class="setup-h">Biscoito da Sorte</div>
+    <img class="setup-cookie" src="icon-192.png" alt="" width="84" height="84" style="border-radius:20px">
+    <div class="setup-h">Biscoito da Sorte</div>
+    <p class="setup-sub">Cada dia da sua vida é um biscoito.<br>Pela expectativa do IBGE, vamos contar quantos ainda há no seu pote — e abrir um por dia.</p>
     <label class="setup-label" for="inp-data">Mês e ano de nascimento</label>
-    <input class="setup-input" id="inp-data" type="text" inputmode="numeric" placeholder="MM/AA" maxlength="5" autocomplete="off">
-    <label class="setup-label">Gênero (para expectativa IBGE)</label>
+    <input class="setup-input" id="inp-data" type="text" inputmode="numeric" placeholder="MM/AAAA" maxlength="7" autocomplete="off">
+    <label class="setup-label">Expectativa IBGE</label>
     <div class="gender-row">
-      <button class="gender-btn" id="btn-m" onclick="selGender('M')">♂ Masculino</button>
-      <button class="gender-btn" id="btn-f" onclick="selGender('F')">♀ Feminino</button>
+      <button class="gender-btn" id="btn-m" onclick="selGender('M')">♂ Masculina</button>
+      <button class="gender-btn" id="btn-f" onclick="selGender('F')">♀ Feminina</button>
+      <button class="gender-btn" id="btn-n" onclick="selGender('N')">Geral</button>
     </div>
-    <button class="setup-btn" onclick="setupConfirm()">✦ Confirmar ✦</button>
+    <button class="btn-gold" onclick="setupConfirm()">Abrir o pote</button>
     <div class="setup-err" id="setup-err"></div>
   </div>
 </div>
 
-<!-- ── Tela principal ── -->
+<!-- ── Principal ── -->
 <div class="screen hidden" id="screen-main">
   <div class="scene">
-    <div class="title-h">Biscoito da Sorte</div>
+    <div>
+      <h1 class="title-h">Biscoito da Sorte</h1>
+      <span class="title-orn">✦ ✦ ✦</span>
+    </div>
 
-    <div class="count-msg" id="count-msg"></div>
+    <div class="tally" id="tally"></div>
 
     <div class="stage">
-      <div class="aura"></div>
-      <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+      <div class="glow"></div>
 
-      <!-- Cookie: SVG real com duas asas que se abrem -->
+      <!-- Biscoito: SVG com duas asas que se abrem -->
       <div class="cookie-wrap" id="cookie">
-        <!--
-          Biscoito da sorte — vista frontal, asa esquerda + asa direita.
-          Paths extraídos do SVG original (grupo 5 / objetos).
-          viewBox="40 44 240 133" cobre exatamente o biscoito frontal.
-          As duas asas são <g id="cL"> e <g id="cR">, animadas via JS.
-        -->
         <svg width="280" height="155" viewBox="40 44 240 133" xmlns="http://www.w3.org/2000/svg" style="display:block;overflow:visible">
           <defs>
             <radialGradient id="gL" cx="68%" cy="30%" r="75%">
@@ -228,27 +275,21 @@ body {
             </linearGradient>
           </defs>
 
-          <!-- sombra no chão -->
-          <ellipse cx="163" cy="174" rx="88" ry="8" fill="rgba(0,0,0,.35)"/>
+          <ellipse cx="163" cy="174" rx="88" ry="8" fill="rgba(0,0,0,.3)"/>
 
-          <!-- ── ASA ESQUERDA ── -->
           <g id="cL">
             <path fill="url(#gL)" d="M139.2,135.5c-0.04,2.49-0.4,4-1.14,4.22c-6.23,1.85-86.73-2.79-90.46-13.77
               c-1.35-3.98,2.95-11.96,9.97-21.36c17.23-23.07,50.8-54.69,57.12-56.56C122.6,45.8,139.5,117.2,139.2,135.5z"/>
-            <!-- highlight interno -->
             <path fill="#EE7115" opacity=".55" d="M131,134.6c-3.07-0.23-7.05-10.84-10.54-24.19c-1.85-7.03-3.56-14.82-4.93-22.25
               c-2.96-16.06-4.34-30.46-2.08-31.87c3.75-2.34,8.71,10.34,12.73,26.14c1.93,7.61,3.64,15.94,4.89,23.67
               C133.7,121.7,134.3,134.8,131,134.6z"/>
-            <!-- brilho -->
             <path fill="#FFCE94" d="M99.7,73.2c-3.1-3.6-19.3,6.3-14,13.6C91.1,94.2,106.3,80.9,99.7,73.2z"/>
             <circle fill="#FFCE94" cx="78.5" cy="95.2" r="3.7"/>
-            <!-- detalhe laranja escuro (fenda central) -->
             <path fill="#EE7115" opacity=".35" d="M139.2,135.5c-0.04,2.49-0.4,4-1.14,4.22c-6.23,1.85-86.73-2.79-90.46-13.77
               c-1.35-3.98,2.95-11.96,9.97-21.36c-0.64,9.18,0.68,18.74,8.32,20.78c15.5,4.14,23.77-4.13,36.17-1.55
               C113.8,126.3,128.6,145,139.2,135.5z"/>
           </g>
 
-          <!-- ── FAIXA CENTRAL (papel + dobra) ── -->
           <g id="cC">
             <path fill="url(#gC)" d="M212.7,73.8c-1.02,8.04-2.79,17.85-4.91,27.21c-0.14,0.65-0.29,1.29-0.44,1.93
               c-3.38-0.39-7.36-0.77-11.75-1.03c-13.4-0.77-49.72-0.41-64.5,4.17c-3.72,1.15-7.28,2.57-10.61,4.31
@@ -257,7 +298,6 @@ body {
             <path fill="rgba(220,195,160,.5)" d="M207.8,101c-0.14,0.65-0.29,1.29-0.44,1.93c-3.38-0.39-7.36-0.77-11.75-1.03
               c-13.4-0.77-49.72-0.41-64.5,4.17c-3.72,1.15-7.28,2.57-10.61,4.31c-0.18-0.7-0.37-1.41-0.55-2.12
               C135,100.5,161.8,94.1,207.8,101z"/>
-            <!-- papel saindo -->
             <path fill="#DDD098" opacity=".8" d="M168,102c20-1.5,42-2.5,62-0.5l1,14c-20-2-42-1-62,0.5z"/>
             <path fill="url(#gPap)" d="M166,95c20-1.8,43-2.8,64-0.6l1,15c-21-2.2-44-1.2-65,0.6z"/>
             <path fill="rgba(255,252,230,.4)" d="M166,95c20-1.8,43-2.8,64-0.6l0.5,4c-21-2.2-44-1.2-65,0.6z"/>
@@ -265,7 +305,6 @@ body {
             <line x1="176" y1="106" x2="228" y2="103" stroke="rgba(80,50,10,.18)" stroke-width="1.2" stroke-linecap="round"/>
           </g>
 
-          <!-- ── ASA DIREITA ── -->
           <g id="cR">
             <path fill="url(#gR)" d="M186.8,135.5c0.04,2.49,0.4,4,1.14,4.22c6.23,1.85,86.73-2.79,90.46-13.77
               c1.35-3.98-2.95-11.96-9.97-21.36c-17.23-23.07-50.8-54.69-57.12-56.56C203.5,45.8,186.5,117.2,186.8,135.5z"/>
@@ -280,8 +319,7 @@ body {
           </g>
         </svg>
 
-        <!-- Partículas de crack -->
-        <div id="cps" style="position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none">
+        <div id="cps" style="position:absolute;inset:0;pointer-events:none">
           <div class="cp" style="width:7px;height:7px;background:#f5c842;--tx:-70px;--ty:-38px;--du:.76s;--dl2:0s"></div>
           <div class="cp" style="width:5px;height:5px;background:#e8a030;--tx:74px;--ty:-34px;--du:.66s;--dl2:.04s"></div>
           <div class="cp" style="width:5px;height:5px;background:#ffd060;--tx:-44px;--ty:-60px;--du:.84s;--dl2:.02s"></div>
@@ -291,33 +329,30 @@ body {
           <div class="cp" style="width:4px;height:4px;background:#ffc040;--tx:18px;--ty:-70px;--du:.86s;--dl2:.01s"></div>
           <div class="cp" style="width:8px;height:8px;background:#f5c842;--tx:-20px;--ty:-66px;--du:.92s;--dl2:.03s"></div>
         </div>
-      </div><!-- /cookie-wrap -->
-    </div><!-- /stage -->
+      </div>
+    </div>
 
-    <!-- Paper slip -->
+    <div class="hint-tap" id="hint-tap">toque no biscoito para abrir</div>
+
+    <!-- Papelzinho -->
     <div class="slip" id="slip">
+      <div class="sl-header">✦ sua sorte de hoje ✦</div>
       <div class="sl-text" id="sl-text"></div>
-      <div class="sl-div"></div>
+      <div class="sl-lucky-label">números da sorte</div>
+      <div class="sl-lucky" id="sl-lucky"></div>
       <div class="sl-days" id="sl-days"></div>
     </div>
 
-    <!-- expired -->
-    <div class="expired-msg hidden" id="expired-msg">
-      <div class="expired-text" id="expired-text"></div>
+    <!-- Estado: próximo biscoito -->
+    <div class="state-row hidden" id="next-row">
+      <div class="state-note">o próximo biscoito chega à meia-noite</div>
+      <div class="state-count" id="next-count">--:--:--</div>
+      <div class="state-lost hidden" id="lost-note"></div>
     </div>
-
-    <!-- tomorrow -->
-    <div class="tomorrow-msg hidden" id="tomorrow-msg">
-      <div class="tomorrow-text">Próximo biscoito em</div>
-      <div class="tomorrow-count" id="tomorrow-count">--:--:--</div>
-    </div>
-
-    <button class="btn hidden" id="open-btn">✦ &nbsp; Abrir Biscoito &nbsp; ✦</button>
-
   </div>
 </div>
 
-<!-- PWA prompt Android/Chrome -->
+<!-- PWA Android/Chrome -->
 <div class="pwa-bar hidden" id="pwa-bar">
   <div class="pwa-txt"><strong>Instalar App</strong>Salve na tela inicial para não perder seus biscoitos</div>
   <div class="pwa-actions">
@@ -325,8 +360,7 @@ body {
     <button class="pwa-x" onclick="dismissPwa()">✕</button>
   </div>
 </div>
-
-<!-- PWA prompt iOS Safari -->
+<!-- PWA iOS -->
 <div class="pwa-bar hidden" id="pwa-ios">
   <div class="pwa-txt"><strong>Instalar App</strong>Toque em <span style="color:var(--gold)">&#x2B06; Compartilhar</span> e depois "Adicionar à Tela de Início"</div>
   <div class="pwa-actions">
@@ -336,28 +370,47 @@ body {
 
 <script src="frases.js"></script>
 <script>
-// Banco de frases: BANCO vem de frases.js
+/* ═══════════════════════════════════════════════════════════
+   BISCOITO DA SORTE · dinâmica
+   Regras:
+   - 1 biscoito por dia, novo à MEIA-NOITE (não +24h da abertura)
+   - frase e números determinísticos por (dia + nascimento):
+     recarregar a página não muda a sorte
+   - biscoito não aberto é perdido para sempre (só contamos, sem punir)
+═══════════════════════════════════════════════════════════ */
+
 var FRASES = BANCO;
+var EV = { M: 73.3, F: 80.5, N: 76.9 }; // IBGE, anos
 
-// IBGE expectativa de vida
-var EV = { M: 73.3, F: 80.5, N: 76.9 };
+function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+function save(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 
-function calcDias(mesNasc, anoNasc, genero) {
-  var hoje = new Date();
-  var anoAtual = hoje.getFullYear();
-  var mesAtual = hoje.getMonth() + 1;
-  // idade em anos (aproximada)
-  var idadeAnos = anoAtual - (2000 + anoNasc);
-  if (mesAtual < mesNasc) idadeAnos--;
-  if (idadeAnos < 0) idadeAnos = 0;
-  var ev = EV[genero] || EV.N;
-  // sobrevida: se já passou da expectativa, acrescenta 6.2 anos bonus
-  var expectativa = ev;
-  if (idadeAnos > ev) expectativa = idadeAnos + 6.2;
-  var diasRestantes = Math.round((expectativa - idadeAnos) * 365.25);
-  if (diasRestantes < 0) diasRestantes = 0;
-  return diasRestantes;
+function pad2(n) { return n < 10 ? '0' + n : '' + n; }
+function dayKey(d) { d = d || new Date(); return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()); }
+function keyToDate(k) { var p = k.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
+function daysBetween(a, b) { return Math.round((b - a) / 86400000); }
+
+/* Nascimento MM/AAAA → dias de biscoito restantes (granularidade diária) */
+function calcDias(mes, anoFull, genero) {
+  var nasc = new Date(anoFull, mes - 1, 15);
+  var idadeDias = (Date.now() - nasc.getTime()) / 86400000;
+  if (idadeDias < 0) idadeDias = 0;
+  var evAnos = EV[genero] || EV.N;
+  var expectativaDias = evAnos * 365.25;
+  // quem já passou da expectativa ganha a sobrevida média (+6.2 anos)
+  if (idadeDias > expectativaDias) expectativaDias = idadeDias + 6.2 * 365.25;
+  var restam = Math.round(expectativaDias - idadeDias);
+  return restam < 0 ? 0 : restam;
 }
+
+/* Seed determinística: mesmo dia + mesma pessoa = mesma sorte */
+function seedFor(mes, ano) {
+  var k = dayKey() + '|' + mes + '|' + ano;
+  var h = 2166136261;
+  for (var i = 0; i < k.length; i++) { h ^= k.charCodeAt(i); h = (h * 16777619) >>> 0; }
+  return h;
+}
+function nextRand(state) { state.s = (state.s * 1664525 + 1013904223) >>> 0; return state.s / 4294967296; }
 
 function getFaixaFrases(dias) {
   if (dias > 20000) return FRASES.alto;
@@ -366,33 +419,35 @@ function getFaixaFrases(dias) {
   return FRASES.fim;
 }
 
-function getFrase(dias) {
+function sorteDoDia(dias, mes, ano) {
+  var st = { s: seedFor(mes, ano) };
   var arr = getFaixaFrases(dias);
-  return arr[Math.floor(Math.random() * arr.length)];
+  var frase = arr[Math.floor(nextRand(st) * arr.length)];
+  var nums = [];
+  while (nums.length < 6) {
+    var n = 1 + Math.floor(nextRand(st) * 60);
+    if (nums.indexOf(n) < 0) nums.push(n);
+  }
+  nums.sort(function (a, b) { return a - b; });
+  return { frase: frase, nums: nums.map(pad2).join('  ') };
 }
 
-function todayKey() {
-  var d = new Date();
-  return d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
-}
-
-function load(k) { try { return localStorage.getItem(k); } catch(e){ return null; } }
-function save(k,v) { try { localStorage.setItem(k,v); } catch(e){} }
-
-// ── Dados de estado ──
+/* ── Estado ── */
 var _gender = null;
 var _deferredInstall = null;
+var _cdTimer = null;
 
 function selGender(g) {
   _gender = g;
-  document.getElementById('btn-m').className = 'gender-btn' + (g==='M'?' active':'');
-  document.getElementById('btn-f').className = 'gender-btn' + (g==='F'?' active':'');
+  document.getElementById('btn-m').className = 'gender-btn' + (g === 'M' ? ' active' : '');
+  document.getElementById('btn-f').className = 'gender-btn' + (g === 'F' ? ' active' : '');
+  document.getElementById('btn-n').className = 'gender-btn' + (g === 'N' ? ' active' : '');
 }
 
-// Formata input MM/AA
-document.getElementById('inp-data').addEventListener('input', function() {
-  var v = this.value.replace(/\D/g,'');
-  if (v.length > 2) v = v.slice(0,2) + '/' + v.slice(2,4);
+/* Formata MM/AAAA */
+document.getElementById('inp-data').addEventListener('input', function () {
+  var v = this.value.replace(/\D/g, '');
+  if (v.length > 2) v = v.slice(0, 2) + '/' + v.slice(2, 6);
   this.value = v;
 });
 
@@ -400,220 +455,105 @@ function setupConfirm() {
   var err = document.getElementById('setup-err');
   err.textContent = '';
   var raw = document.getElementById('inp-data').value.trim();
-  if (!raw.match(/^\d{2}\/\d{2}$/)) { err.textContent = 'Use o formato MM/AA'; return; }
+  if (!raw.match(/^\d{2}\/\d{4}$/)) { err.textContent = 'Use o formato MM/AAAA'; return; }
   var parts = raw.split('/');
   var mes = parseInt(parts[0], 10);
   var ano = parseInt(parts[1], 10);
-  if (mes < 1 || mes > 12) { err.textContent = 'Mês inválido (01-12)'; return; }
-  var anoFull = 2000 + ano;
   var anoAtual = new Date().getFullYear();
-  if (anoFull > anoAtual) { err.textContent = 'Ano não pode ser futuro'; return; }
-  if (!_gender) { err.textContent = 'Selecione um gênero'; return; }
+  if (mes < 1 || mes > 12) { err.textContent = 'Mês inválido (01–12)'; return; }
+  if (ano < 1900) { err.textContent = 'Ano muito antigo'; return; }
+  if (ano > anoAtual) { err.textContent = 'Ano não pode ser futuro'; return; }
+  if (!_gender) { err.textContent = 'Escolha uma expectativa'; return; }
 
   save('bsc_mes', mes);
   save('bsc_ano', ano);
   save('bsc_gen', _gender);
+  if (!load('bsc_first')) save('bsc_first', dayKey());
 
   showMain(mes, ano, _gender);
 }
 
 function showMain(mes, ano, gen) {
   document.getElementById('screen-setup').className = 'screen hidden';
-  document.getElementById('screen-main').className = 'screen hidden';
-  // remove "screen" class completely to allow background to show
-  document.getElementById('screen-main').style.position = 'relative';
-  document.getElementById('screen-main').style.background = 'transparent';
-  document.getElementById('screen-main').style.zIndex = '10';
-  document.getElementById('screen-main').className = 'screen hidden';
-  // Actually just show it properly
-  var sm = document.getElementById('screen-main');
-  sm.style.position = '';
-  sm.style.background = '';
-  sm.style.zIndex = '';
-  sm.className = 'screen';
-
-  var dias = calcDias(mes, ano, gen);
-  renderMain(dias);
-
-  // PWA prompt after 3s
+  document.getElementById('screen-main').className = 'screen';
+  renderMain(mes, ano, gen);
   setTimeout(showPwa, 3000);
 }
 
-function renderMain(dias) {
-  var cookie = document.getElementById('cookie');
-  var slip = document.getElementById('slip');
-  var openBtn = document.getElementById('open-btn');
-  var expiredMsg = document.getElementById('expired-msg');
-  var tomorrowMsg = document.getElementById('tomorrow-msg');
-  var countMsg = document.getElementById('count-msg');
+function renderMain(mes, ano, gen) {
+  var dias = calcDias(mes, ano, gen);
+  var abertos = parseInt(load('bsc_opened_count') || '0', 10);
+  var first = load('bsc_first') || dayKey();
+  var hoje = dayKey();
+  var abriuHoje = load('bsc_last_opened') === hoje;
 
-  // Reset state
+  // perdidos = dias corridos desde o início − abertos − (hoje ainda em aberto?)
+  var corridos = daysBetween(keyToDate(first), keyToDate(hoje)) + 1;
+  var perdidos = corridos - abertos - (abriuHoje ? 0 : 1);
+  if (perdidos < 0) perdidos = 0;
+
+  renderTally(dias, abertos, perdidos);
+
+  if (abriuHoje) {
+    var s = sorteDoDia(dias, mes, ano);
+    showOpened(s, dias, true);
+  } else {
+    showReady(dias, mes, ano);
+  }
+}
+
+function renderTally(dias, abertos, perdidos) {
+  document.getElementById('tally').innerHTML =
+    '<span><b>' + dias.toLocaleString('pt-BR') + '</b> no pote</span>' +
+    '<span><b>' + abertos.toLocaleString('pt-BR') + '</b> ' + (abertos === 1 ? 'aberto' : 'abertos') + '</span>' +
+    (perdidos > 0 ? '<span><b>' + perdidos.toLocaleString('pt-BR') + '</b> ' + (perdidos === 1 ? 'perdido' : 'perdidos') + '</span>' : '');
+}
+
+function showReady(dias, mes, ano) {
+  var cookie = document.getElementById('cookie');
   cookie.className = 'cookie-wrap';
-  slip.className = 'slip';
-  openBtn.className = 'btn hidden';
-  expiredMsg.className = 'expired-msg hidden';
-  tomorrowMsg.className = 'tomorrow-msg hidden';
-
-  var today = todayKey();
-  var lastOpened = load('bsc_last_opened');   // YYYY-M-D of last opened
-  var lastCreated = load('bsc_last_created');  // YYYY-M-D of last cookie creation
-
-  // Count message
-  countMsg.innerHTML = '<div class="count-main">Você tem aproximadamente <strong style="color:var(--gold)">' + dias.toLocaleString('pt-BR') + ' biscoitos</strong> para abrir, gostaria de começar pelo de hoje?</div><div class="count-sub">Um biscoito por dia · não perca nenhum</div>';
-
-  // State machine:
-  // 1. Never opened → show cookie, ready to open
-  // 2. Opened today → show result, no button
-  // 3. Yesterday's was not opened (missed) → show expired message
-  // 4. Previous day opened, today's available → show new cookie
-
-  if (!lastCreated) {
-    // First ever visit
-    save('bsc_last_created', today);
-    showCookieReady(dias);
-    return;
-  }
-
-  if (lastOpened === today) {
-    // Already opened today
-    var frase = load('bsc_frase_today') || getFrase(dias);
-    showOpened(frase, dias);
-    showTomorrow();
-    return;
-  }
-
-  // Check if today's cookie is available or if yesterday was missed
-  var created = new Date(lastCreated.replace(/-(\d)-/g,'-0$1-').replace(/-(\d)$/,'-0$1'));
-  var todayD = new Date(today.replace(/-(\d)-/g,'-0$1-').replace(/-(\d)$/,'-0$1'));
-  var diffMs = todayD - created;
-  var diffDays = Math.floor(diffMs / 86400000);
-
-  if (diffDays === 0) {
-    // Same day as creation, not yet opened
-    showCookieReady(dias);
-    return;
-  }
-
-  if (diffDays === 1 && !lastOpened) {
-    // Created yesterday, never opened → expired
-    showExpired(dias);
-    save('bsc_last_created', today);
-    return;
-  }
-
-  if (diffDays >= 1) {
-    // New day → create fresh cookie (previous expired if not opened)
-    save('bsc_last_created', today);
-    if (lastOpened && lastOpened !== lastCreated) {
-      // gap — expired
-      showExpired(dias);
-    } else {
-      showCookieReady(dias);
-    }
-    return;
-  }
-
-  showCookieReady(dias);
+  resetWings();
+  document.getElementById('hint-tap').className = 'hint-tap';
+  document.getElementById('slip').className = 'slip';
+  document.getElementById('next-row').className = 'state-row hidden';
+  cookie.onclick = function () { openCookie(dias, mes, ano); };
 }
 
-function showCookieReady(dias) {
-  var cookie = document.getElementById('cookie');
-  var openBtn = document.getElementById('open-btn');
-  cookie.className = 'cookie-wrap';
-  openBtn.className = 'btn';
-  openBtn.textContent = '✦   Abrir Biscoito   ✦';
-
-  // Bind click+touch
-  var _dias = dias;
-  function doOpen() { openCookie(_dias); }
-  cookie.onclick = doOpen;
-  openBtn.onclick = doOpen;
-  openBtn.addEventListener('touchend', function(e){ e.preventDefault(); doOpen(); }, {passive:false});
-  cookie.addEventListener('touchend', function(e){ e.preventDefault(); doOpen(); }, {passive:false});
+function resetWings() {
+  var gL = document.getElementById('cL');
+  var gR = document.getElementById('cR');
+  var gC = document.getElementById('cC');
+  [gL, gR, gC].forEach(function (g) { if (g) { g.style.transition = 'none'; g.style.transform = ''; g.style.opacity = ''; } });
 }
 
-function showOpened(frase, dias) {
-  var cookie = document.getElementById('cookie');
-  var slip = document.getElementById('slip');
-  cookie.className = 'cookie-wrap open';
-  document.getElementById('sl-text').textContent = frase;
-  document.getElementById('sl-days').textContent = 'você ainda tem ' + dias.toLocaleString('pt-BR') + ' biscoitos para abrir';
-  slip.className = 'slip on';
-}
-
-function showExpired(dias) {
-  var expiredMsg = document.getElementById('expired-msg');
-  var cookie = document.getElementById('cookie');
-  cookie.style.opacity = '0.3';
-  cookie.style.pointerEvents = 'none';
-  expiredMsg.className = 'expired-msg';
-  document.getElementById('expired-text').textContent = FRASES.vencido;
-  showTomorrow();
-}
-
-var _cdTimer = null;
-
-function showTomorrow() {
-  document.getElementById('tomorrow-msg').className = 'tomorrow-msg';
-  startCountdown();
-}
-
-function startCountdown() {
-  if (_cdTimer) clearInterval(_cdTimer);
-  function tick() {
-    var ts = parseInt(load('bsc_last_opened_ts') || '0', 10);
-    var next = ts + 24 * 60 * 60 * 1000;
-    var diff = next - Date.now();
-    var el = document.getElementById('tomorrow-count');
-    if (!el) return;
-    if (diff <= 0) {
-      el.textContent = '00:00:00';
-      clearInterval(_cdTimer);
-      return;
-    }
-    var h = Math.floor(diff / 3600000);
-    var m = Math.floor((diff % 3600000) / 60000);
-    var s = Math.floor((diff % 60000) / 1000);
-    function pad(n) { return n < 10 ? '0' + n : '' + n; }
-    el.textContent = pad(h) + ':' + pad(m) + ':' + pad(s);
-  }
-  tick();
-  _cdTimer = setInterval(tick, 1000);
-}
-
-function openCookie(dias) {
+function openCookie(dias, mes, ano) {
   var cookie = document.getElementById('cookie');
   if (cookie.className.indexOf('open') >= 0) return;
-
-  // crack shake first
   cookie.onclick = null;
   cookie.className = 'cookie-wrap crack';
+  document.getElementById('hint-tap').className = 'hint-tap hidden';
 
-  setTimeout(function() {
+  setTimeout(function () {
     cookie.className = 'cookie-wrap open';
-
-    // Anima asas: esquerda vai pra esquerda, direita vai pra direita
     var gL = document.getElementById('cL');
     var gR = document.getElementById('cR');
     var gC = document.getElementById('cC');
-    if (gL) { gL.style.webkitTransition = 'transform .6s cubic-bezier(.34,1.2,.64,1)'; gL.style.transition = 'transform .6s cubic-bezier(.34,1.2,.64,1)'; gL.style.transformBox = 'fill-box'; gL.style.transformOrigin = 'right center'; gL.style.transform = 'translateX(-60px) translateY(-12px) rotate(-14deg)'; }
-    if (gR) { gR.style.webkitTransition = 'transform .6s cubic-bezier(.34,1.2,.64,1)'; gR.style.transition = 'transform .6s cubic-bezier(.34,1.2,.64,1)'; gR.style.transformBox = 'fill-box'; gR.style.transformOrigin = 'left center'; gR.style.transform = 'translateX(60px) translateY(-12px) rotate(14deg)'; }
-    if (gC) { gC.style.webkitTransition = 'opacity .4s ease .2s'; gC.style.transition = 'opacity .4s ease .2s'; gC.style.opacity = '0'; }
+    var tf = 'transform .6s cubic-bezier(.34,1.2,.64,1)';
+    if (gL) { gL.style.transition = tf; gL.style.transformBox = 'fill-box'; gL.style.transformOrigin = 'right center'; gL.style.transform = 'translateX(-60px) translateY(-12px) rotate(-14deg)'; }
+    if (gR) { gR.style.transition = tf; gR.style.transformBox = 'fill-box'; gR.style.transformOrigin = 'left center'; gR.style.transform = 'translateX(60px) translateY(-12px) rotate(14deg)'; }
+    if (gC) { gC.style.transition = 'opacity .4s ease .2s'; gC.style.opacity = '0'; }
 
-    var dias2 = dias;
-    var frase = getFrase(dias2);
-    save('bsc_last_opened', todayKey());
-    save('bsc_last_opened_ts', String(Date.now()));
-    save('bsc_frase_today', frase);
+    save('bsc_last_opened', dayKey());
+    save('bsc_opened_count', String(parseInt(load('bsc_opened_count') || '0', 10) + 1));
 
-    showOpened(frase, dias2);
-    showTomorrow();
+    var s = sorteDoDia(dias, mes, ano);
+    showOpened(s, dias, false);
 
-    document.getElementById('open-btn').className = 'btn hidden';
+    // re-renderiza contadores
+    renderTally(dias, parseInt(load('bsc_opened_count') || '0', 10), 0);
 
-    // Restart particles
-    var cps = document.getElementById('cps');
-    var ps = cps.querySelectorAll('.cp');
+    // migalhas
+    var ps = document.getElementById('cps').querySelectorAll('.cp');
     for (var i = 0; i < ps.length; i++) {
       ps[i].style.animation = 'none';
       void ps[i].offsetWidth;
@@ -622,86 +562,134 @@ function openCookie(dias) {
   }, 460);
 }
 
-// ── Init ──
-(function() {
+function showOpened(sorte, dias, instant) {
+  var cookie = document.getElementById('cookie');
+  cookie.className = 'cookie-wrap open';
+  document.getElementById('hint-tap').className = 'hint-tap hidden';
+  if (instant) {
+    // já veio aberto (recarregou a página): asas abertas sem animação
+    var gL = document.getElementById('cL');
+    var gR = document.getElementById('cR');
+    var gC = document.getElementById('cC');
+    if (gL) { gL.style.transition = 'none'; gL.style.transformBox = 'fill-box'; gL.style.transformOrigin = 'right center'; gL.style.transform = 'translateX(-60px) translateY(-12px) rotate(-14deg)'; }
+    if (gR) { gR.style.transition = 'none'; gR.style.transformBox = 'fill-box'; gR.style.transformOrigin = 'left center'; gR.style.transform = 'translateX(60px) translateY(-12px) rotate(14deg)'; }
+    if (gC) { gC.style.transition = 'none'; gC.style.opacity = '0'; }
+  }
+  document.getElementById('sl-text').textContent = sorte.frase;
+  document.getElementById('sl-lucky').textContent = sorte.nums;
+  document.getElementById('sl-days').textContent = 'restam ' + (dias - 1 >= 0 ? (dias - 1) : 0).toLocaleString('pt-BR') + ' biscoitos no seu pote';
+  document.getElementById('slip').className = 'slip on';
+  showNext();
+}
+
+function showNext() {
+  document.getElementById('next-row').className = 'state-row';
+  var lost = document.getElementById('lost-note');
+  var abertos = parseInt(load('bsc_opened_count') || '0', 10);
+  var first = load('bsc_first') || dayKey();
+  var corridos = daysBetween(keyToDate(first), keyToDate(dayKey())) + 1;
+  var perdidos = corridos - abertos;
+  if (perdidos > 0) {
+    lost.className = 'state-lost';
+    lost.textContent = perdidos.toLocaleString('pt-BR') + (perdidos === 1 ? ' biscoito passou' : ' biscoitos passaram') + ' sem ser aberto' + (perdidos === 1 ? '' : 's');
+  } else {
+    lost.className = 'state-lost hidden';
+  }
+  startCountdown();
+}
+
+function startCountdown() {
+  if (_cdTimer) clearInterval(_cdTimer);
+  function tick() {
+    var now = new Date();
+    var mid = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
+    var diff = mid - now;
+    var el = document.getElementById('next-count');
+    if (!el) return;
+    if (diff <= 0) {
+      clearInterval(_cdTimer);
+      // meia-noite virou: biscoito novo
+      var mes = parseInt(load('bsc_mes'), 10), ano = parseInt(load('bsc_ano'), 10), gen = load('bsc_gen');
+      renderMain(mes, ano, gen);
+      return;
+    }
+    var h = Math.floor(diff / 3600000);
+    var m = Math.floor((diff % 3600000) / 60000);
+    var s = Math.floor((diff % 60000) / 1000);
+    el.textContent = pad2(h) + ':' + pad2(m) + ':' + pad2(s);
+  }
+  tick();
+  _cdTimer = setInterval(tick, 1000);
+}
+
+/* ── Init (com migração de dados antigos) ── */
+(function () {
   var mes = load('bsc_mes');
   var ano = load('bsc_ano');
   var gen = load('bsc_gen');
   if (mes && ano && gen) {
-    showMain(parseInt(mes,10), parseInt(ano,10), gen);
+    var anoN = parseInt(ano, 10);
+    // migração: versões antigas salvavam 2 dígitos (e assumiam 2000+)
+    if (anoN < 100) {
+      var atual2 = new Date().getFullYear() % 100;
+      anoN = anoN <= atual2 ? 2000 + anoN : 1900 + anoN;
+      save('bsc_ano', anoN);
+    }
+    if (!load('bsc_first')) save('bsc_first', load('bsc_last_created') || dayKey());
+    showMain(parseInt(mes, 10), anoN, gen);
   }
-  // else stays on setup screen
 })();
 
-// ── PWA ──
+/* ── PWA ── */
 var _isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Macintosh/i.test(navigator.userAgent));
 var _isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent) && !window.MSStream;
 var _isStandalone = window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches;
 
-window.addEventListener('beforeinstallprompt', function(e) {
+window.addEventListener('beforeinstallprompt', function (e) {
   e.preventDefault();
   _deferredInstall = e;
 });
 
 function showPwa() {
   if (!_isMobile || _isStandalone || load('bsc_pwa_dismissed')) return;
-  if (_isIOS) {
-    // iOS Safari: sem beforeinstallprompt, mostra instrução manual
-    document.getElementById('pwa-ios').className = 'pwa-bar';
-  } else if (_deferredInstall) {
-    // Android/Chrome: usa a API nativa
-    document.getElementById('pwa-bar').className = 'pwa-bar';
-  }
+  if (_isIOS) document.getElementById('pwa-ios').className = 'pwa-bar';
+  else if (_deferredInstall) document.getElementById('pwa-bar').className = 'pwa-bar';
 }
-
-document.getElementById('pwa-ok').addEventListener('click', function() {
+document.getElementById('pwa-ok').addEventListener('click', function () {
   document.getElementById('pwa-bar').className = 'pwa-bar hidden';
   if (_deferredInstall) {
     _deferredInstall.prompt();
-    _deferredInstall.userChoice.then(function() {
+    _deferredInstall.userChoice.then(function () {
       _deferredInstall = null;
       save('bsc_pwa_dismissed', '1');
     });
   }
 });
-
 function dismissPwa() {
   save('bsc_pwa_dismissed', '1');
   document.getElementById('pwa-bar').className = 'pwa-bar hidden';
   document.getElementById('pwa-ios').className = 'pwa-bar hidden';
 }
 
-// ── Stars ──
-(function() {
-  var bg = document.getElementById('bg');
-  for (var i = 0; i < 80; i++) {
-    var s = document.createElement('div');
-    s.className = 'star';
-    var z = Math.random() * 2.2 + 0.4;
-    s.style.cssText = 'width:'+z+'px;height:'+z+'px;top:'+Math.random()*100+'%;left:'+Math.random()*100+'%;--d:'+(2+Math.random()*4)+'s;--dl:'+Math.random()*5+'s;--mo:'+(0.3+Math.random()*0.7);
-    bg.appendChild(s);
-  }
-})();
-
-// ── Service Worker ──
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/biscoito/sw.js');
-  });
-}
-
-// ── Ambient particles ──
-(function() {
-  var c = document.getElementById('ac');
-  var cols = ['#f5c842','#d4a012','#e8891a','#7bbfff','#2ecc9b'];
-  for (var i = 0; i < 14; i++) {
+/* ── Flecos dourados ── */
+(function () {
+  var c = document.getElementById('flecks');
+  var cols = ['#f5c842', '#d4a012', '#ffdf6b', '#e8891a'];
+  for (var i = 0; i < 16; i++) {
     var p = document.createElement('div');
-    p.className = 'ap';
+    p.className = 'fleck';
     var z = Math.random() * 3 + 1.5;
-    p.style.cssText = 'width:'+z+'px;height:'+z+'px;background:'+cols[Math.floor(Math.random()*cols.length)]+';left:'+(15+Math.random()*70)+'%;bottom:'+Math.random()*20+'%;--d:'+(6+Math.random()*9)+'s;--dl:'+Math.random()*9+'s;--dx:'+((Math.random()-.5)*70)+'px;filter:blur(.3px)';
+    p.style.cssText = 'width:' + z + 'px;height:' + z + 'px;background:' + cols[Math.floor(Math.random() * cols.length)] + ';left:' + (10 + Math.random() * 80) + '%;bottom:' + Math.random() * 25 + '%;--d:' + (6 + Math.random() * 9) + 's;--dl:' + Math.random() * 9 + 's;--dx:' + ((Math.random() - .5) * 80) + 'px;filter:blur(.3px)';
     c.appendChild(p);
   }
 })();
+
+/* ── SW ── */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('sw.js');
+  });
+}
 </script>
 </body>
 </html>

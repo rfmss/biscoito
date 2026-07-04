@@ -2,10 +2,10 @@
   "name": "Biscoito da Sorte",
   "short_name": "Biscoito",
   "description": "Um biscoito da sorte por dia, baseado na sua expectativa de vida.",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
-  "background_color": "#0d0a06",
-  "theme_color": "#0d0a06",
+  "background_color": "#8e1f14",
+  "theme_color": "#8e1f14",
   "orientation": "portrait",
   "icons": [
     {
@@ -20,5 +20,6 @@
       "type": "image/png",
       "purpose": "any maskable"
     }
-  ]
+  ],
+  "scope": "./"
 }
