@@ -7,13 +7,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Biscoito">
-<meta name="description" content="Um biscoito da sorte por dia, contado pela sua expectativa de vida. Abra o de hoje — ele não volta amanhã.">
+<meta name="description" content="Um biscoito da sorte por dia, contado pela sua expectativa de vida. Rasgue a embalagem, quebre o biscoito, leia sua sorte.">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="icon" type="image/png" href="icon-192.png">
 <title>Biscoito da Sorte</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
 
 :root {
   --laca: #8e1f14;
@@ -23,7 +23,7 @@
   --gold3: #8b6500;
   --paper: #f7efdc;
   --paper2: #efe3c8;
-  --tinta: #b3372b;       /* vermelho clássico do papelzinho */
+  --tinta: #b3372b;
   --tinta-suave: #8a5a3a;
 }
 
@@ -46,12 +46,9 @@ body {
   color: var(--paper);
 }
 
-/* ── Flecos dourados flutuando ── */
+/* ── Flecos dourados ── */
 .fleck {
-  position: fixed;
-  border-radius: 50%;
-  pointer-events: none;
-  opacity: 0;
+  position: fixed; border-radius: 50%; pointer-events: none; opacity: 0;
   -webkit-animation: rise var(--d, 9s) ease-in-out infinite var(--dl, 0s);
   animation: rise var(--d, 9s) ease-in-out infinite var(--dl, 0s);
 }
@@ -72,100 +69,162 @@ body {
   box-shadow: 0 0 0 4px rgba(60, 12, 6, 0.25), 0 18px 60px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   padding: 34px 28px;
-  width: min(360px, 94vw);
+  width: min(380px, 94vw);
   text-align: center;
   -webkit-animation: up .7s ease both;
   animation: up .7s ease both;
 }
-.setup-cookie { width: 84px; height: 84px; margin: 0 auto 10px; display: block; filter: drop-shadow(0 8px 18px rgba(0,0,0,.45)); }
+.setup-cookie { width: 90px; height: 90px; margin: 0 auto 12px; display: block; filter: drop-shadow(0 8px 18px rgba(0,0,0,.45)); }
 .setup-h {
-  font-size: 24px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase;
+  font-size: 28px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase;
   background: linear-gradient(180deg, #ffdf6b 0%, #d4a012 60%, #e8891a 100%);
   -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
-.setup-sub { font-family: 'Crimson Pro', serif; font-style: italic; font-size: 15px; line-height: 1.55; color: rgba(247, 239, 220, 0.85); margin-bottom: 26px; }
-.setup-label { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: rgba(245, 200, 66, 0.7); text-align: left; margin-bottom: 8px; display: block; }
+.setup-sub { font-family: 'Crimson Pro', serif; font-style: italic; font-size: 18px; line-height: 1.55; color: rgba(247, 239, 220, 0.92); margin-bottom: 26px; }
+.setup-label { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: rgba(245, 200, 66, 0.85); text-align: left; margin-bottom: 8px; display: block; }
 .setup-input {
   width: 100%; background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(245, 200, 66, 0.35);
-  color: var(--paper); font-family: 'Cinzel', serif; font-size: 20px; letter-spacing: 5px;
-  text-align: center; padding: 12px; border-radius: 6px; outline: none; margin-bottom: 20px; -webkit-appearance: none;
+  color: var(--paper); font-family: 'Cinzel', serif; font-size: 24px; font-weight: 700; letter-spacing: 5px;
+  text-align: center; padding: 13px; border-radius: 6px; outline: none; margin-bottom: 20px; -webkit-appearance: none;
 }
 .setup-input:focus { border-color: var(--gold); background: rgba(0, 0, 0, 0.35); }
-.setup-input::placeholder { color: rgba(247, 239, 220, 0.3); font-size: 15px; letter-spacing: 2px; }
+.setup-input::placeholder { color: rgba(247, 239, 220, 0.35); font-size: 17px; letter-spacing: 2px; font-weight: 400; }
 .gender-row { display: flex; gap: 8px; margin-bottom: 24px; }
 .gender-btn {
-  flex: 1; padding: 11px 4px; border: 1px solid rgba(245, 200, 66, 0.3); background: rgba(0, 0, 0, 0.18);
-  color: rgba(247, 239, 220, 0.65); font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 1px;
+  flex: 1; padding: 12px 4px; border: 1px solid rgba(245, 200, 66, 0.3); background: rgba(0, 0, 0, 0.18);
+  color: rgba(247, 239, 220, 0.75); font-family: 'Cinzel', serif; font-size: 12px; font-weight: 700; letter-spacing: 1px;
   border-radius: 6px; cursor: pointer; transition: all .2s; -webkit-tap-highlight-color: transparent;
 }
 .gender-btn.active { border-color: var(--gold); background: rgba(245, 200, 66, 0.16); color: var(--gold); }
 .btn-gold {
-  width: 100%; font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+  width: 100%; font-family: 'Cinzel', serif; font-size: 14px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase;
   color: #4a1206; background: linear-gradient(180deg, #ffdf6b 0%, #d4a012 60%, #e8891a 100%);
-  border: none; padding: 15px; border-radius: 6px; cursor: pointer;
+  border: none; padding: 16px; border-radius: 6px; cursor: pointer;
   box-shadow: 0 0 0 1px var(--gold3), 0 6px 18px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4);
   transition: transform .15s;
 }
 .btn-gold:active { transform: translateY(1px); }
-.setup-err { font-size: 10px; letter-spacing: 2px; color: #ffd0c5; margin-top: 12px; min-height: 16px; text-transform: uppercase; }
+.setup-err { font-size: 12px; letter-spacing: 2px; color: #ffd0c5; margin-top: 12px; min-height: 18px; text-transform: uppercase; }
 
 /* ── Cena principal ── */
-.scene { position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 16px; width: 100%; max-width: 420px; }
+.scene { position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 16px; width: 100%; max-width: 440px; }
 
 .title-h {
-  font-size: clamp(17px, 4vw, 26px); font-weight: 900; letter-spacing: 5px; text-transform: uppercase; text-align: center;
+  font-size: clamp(24px, 5.5vw, 36px); font-weight: 900; letter-spacing: 5px; text-transform: uppercase; text-align: center;
   background: linear-gradient(180deg, #ffdf6b 0%, #d4a012 60%, #e8891a 100%);
   -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
   -webkit-animation: up .8s ease both; animation: up .8s ease both;
 }
-.title-orn { display: block; text-align: center; color: rgba(245, 200, 66, 0.55); font-size: 11px; letter-spacing: 8px; margin-top: 4px; }
+.title-orn { display: block; text-align: center; color: rgba(245, 200, 66, 0.6); font-size: 13px; letter-spacing: 9px; margin-top: 5px; }
 
 /* ── Contadores ── */
 .tally {
-  display: flex; gap: 8px; -webkit-animation: up .8s ease .15s both; animation: up .8s ease .15s both;
-  font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
+  display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+  -webkit-animation: up .8s ease .15s both; animation: up .8s ease .15s both;
+  font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
 }
 .tally span {
-  background: rgba(0, 0, 0, 0.28); border: 1px solid rgba(245, 200, 66, 0.22);
-  border-radius: 999px; padding: 7px 13px; color: rgba(247, 239, 220, 0.8);
+  background: rgba(0, 0, 0, 0.28); border: 1px solid rgba(245, 200, 66, 0.25);
+  border-radius: 999px; padding: 9px 16px; color: rgba(247, 239, 220, 0.92);
 }
-.tally b { color: var(--gold); font-weight: 700; }
+.tally b { color: var(--gold); font-weight: 900; }
 
 /* ── Stage ── */
-.stage { position: relative; width: 300px; height: 215px; display: flex; align-items: center; justify-content: center; -webkit-animation: up .9s ease .25s both; animation: up .9s ease .25s both; }
-.glow { position: absolute; inset: 18px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 214, 110, 0.22) 0%, rgba(232, 137, 26, 0.07) 50%, transparent 72%); -webkit-animation: pulse 3.5s ease-in-out infinite; animation: pulse 3.5s ease-in-out infinite; }
+.stage { position: relative; width: 310px; height: 230px; display: flex; align-items: center; justify-content: center; -webkit-animation: up .9s ease .25s both; animation: up .9s ease .25s both; }
+.glow { position: absolute; inset: 10px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 214, 110, 0.2) 0%, rgba(232, 137, 26, 0.06) 50%, transparent 72%); -webkit-animation: pulse 3.5s ease-in-out infinite; animation: pulse 3.5s ease-in-out infinite; }
 @-webkit-keyframes pulse { 0%,100% { -webkit-transform: scale(1); opacity: .75; } 50% { -webkit-transform: scale(1.07); opacity: 1; } }
 @keyframes pulse { 0%,100% { transform: scale(1); opacity: .75; } 50% { transform: scale(1.07); opacity: 1; } }
 
-.cookie-wrap {
-  position: relative; cursor: pointer; width: 280px; height: 155px;
-  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.35)) drop-shadow(0 16px 34px rgba(0, 0, 0, 0.5));
+/* ═══ EMBALAGEM ═══ */
+.pkt {
+  position: relative; width: 290px; height: 200px; cursor: grab;
+  touch-action: none;
+  -webkit-user-select: none; user-select: none;
+  filter: drop-shadow(0 14px 30px rgba(0, 0, 0, 0.5));
   -webkit-animation: floaty 4s ease-in-out infinite; animation: floaty 4s ease-in-out infinite;
+}
+.pkt:active { cursor: grabbing; }
+.pkt.hidden { display: none; }
+.pkt.tearing { -webkit-animation: none; animation: none; }
+.pkt.nudge { -webkit-animation: nudge .5s ease; animation: nudge .5s ease; }
+@-webkit-keyframes nudge { 0%,100% { -webkit-transform: rotate(0); } 25% { -webkit-transform: rotate(-2.5deg); } 65% { -webkit-transform: rotate(2.5deg); } }
+@keyframes nudge { 0%,100% { transform: rotate(0); } 25% { transform: rotate(-2.5deg); } 65% { transform: rotate(2.5deg); } }
+
+.pkt-piece { position: absolute; inset: 0; }
+.pkt-top {
+  clip-path: polygon(0% 0%, 100% 0%, 100% 34%, 90% 30%, 80% 37%, 70% 30%, 60% 37%, 50% 30%, 40% 37%, 30% 30%, 20% 37%, 10% 30%, 0% 34%);
+  z-index: 2;
+}
+.pkt-bot {
+  clip-path: polygon(0% 34%, 10% 30%, 20% 37%, 30% 30%, 40% 37%, 50% 30%, 60% 37%, 70% 30%, 80% 37%, 90% 30%, 100% 34%, 100% 100%, 0% 100%);
+}
+.pkt-top.spring { transition: transform .3s cubic-bezier(.34, 1.56, .64, 1); }
+.pkt-top.gone { transition: transform .45s ease-in, opacity .45s ease-in; transform: translate(250px, -100px) rotate(26deg) !important; opacity: 0; }
+.pkt.drop .pkt-bot { transition: transform .55s ease-in .05s, opacity .55s ease-in .05s; transform: translateY(150px) rotate(-7deg); opacity: 0; }
+
+.pkt-skin {
+  position: absolute; inset: 0; border-radius: 10px;
+  background:
+    linear-gradient(115deg, transparent 32%, rgba(255, 255, 255, 0.55) 46%, transparent 58%),
+    linear-gradient(180deg, #fbf7ee 0%, #efe8d8 55%, #e4dbc5 100%);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+}
+/* crimp (serrilha de fábrica) nas bordas */
+.pkt-skin::before, .pkt-skin::after {
+  content: ""; position: absolute; left: 8px; right: 8px; height: 11px;
+  background: repeating-linear-gradient(90deg, rgba(90, 60, 20, 0.14) 0 2px, transparent 2px 7px);
+  border-radius: 3px;
+}
+.pkt-skin::before { top: 5px; border-bottom: 1px solid rgba(90, 60, 20, 0.12); }
+.pkt-skin::after { bottom: 5px; border-top: 1px solid rgba(90, 60, 20, 0.12); }
+
+.pkt-seal { width: 66px; height: 66px; }
+.pkt-name { font-family: 'Cinzel', serif; font-size: 16px; font-weight: 900; letter-spacing: 3.5px; text-transform: uppercase; color: var(--tinta); }
+.pkt-tag { font-family: 'Crimson Pro', serif; font-style: italic; font-size: 12.5px; color: rgba(90, 50, 20, 0.7); letter-spacing: .4px; }
+
+/* ═══ BISCOITO (Fluent 3D partido em dois) ═══ */
+.cookie3d {
+  position: relative; width: 235px; height: 235px; cursor: pointer;
+  -webkit-animation: floaty 4s ease-in-out infinite; animation: floaty 4s ease-in-out infinite;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.35)) drop-shadow(0 18px 36px rgba(0, 0, 0, 0.45));
   transition: transform .25s;
 }
-.cookie-wrap:hover { transform: scale(1.03); }
-@-webkit-keyframes floaty { 0%,100% { -webkit-transform: translateY(0) rotate(-.5deg); } 50% { -webkit-transform: translateY(-9px) rotate(.5deg); } }
-@keyframes floaty { 0%,100% { transform: translateY(0) rotate(-.5deg); } 50% { transform: translateY(-9px) rotate(.5deg); } }
-.cookie-wrap.open { -webkit-animation: none; animation: none; cursor: default; }
-.cookie-wrap.crack { -webkit-animation: shake .44s ease forwards; animation: shake .44s ease forwards; pointer-events: none; }
+.cookie3d:hover { transform: scale(1.04); }
+.cookie3d.hidden { display: none; }
+.cookie3d.pop { -webkit-animation: popIn .55s cubic-bezier(.34, 1.5, .64, 1) both, floaty 4s ease-in-out .6s infinite; animation: popIn .55s cubic-bezier(.34, 1.5, .64, 1) both, floaty 4s ease-in-out .6s infinite; }
+@-webkit-keyframes popIn { from { -webkit-transform: scale(.2) rotate(-10deg); opacity: 0; } to { -webkit-transform: scale(1) rotate(0); opacity: 1; } }
+@keyframes popIn { from { transform: scale(.2) rotate(-10deg); opacity: 0; } to { transform: scale(1) rotate(0); opacity: 1; } }
+@-webkit-keyframes floaty { 0%,100% { -webkit-transform: translateY(0) rotate(-.6deg); } 50% { -webkit-transform: translateY(-9px) rotate(.6deg); } }
+@keyframes floaty { 0%,100% { transform: translateY(0) rotate(-.6deg); } 50% { transform: translateY(-9px) rotate(.6deg); } }
+.cookie3d.open, .cookie3d.crack { -webkit-animation: none; animation: none; cursor: default; }
+.cookie3d.crack { -webkit-animation: shake .44s ease forwards; animation: shake .44s ease forwards; pointer-events: none; }
 @-webkit-keyframes shake { 0% { -webkit-transform: rotate(0); } 15% { -webkit-transform: translateY(-5px) rotate(-3deg); } 35% { -webkit-transform: translateY(3px) rotate(3deg); } 55% { -webkit-transform: translateY(-2px) rotate(-2deg); } 80% { -webkit-transform: translateY(1px) rotate(1deg); } 100% { -webkit-transform: rotate(0); } }
 @keyframes shake { 0% { transform: rotate(0); } 15% { transform: translateY(-5px) rotate(-3deg); } 35% { transform: translateY(3px) rotate(3deg); } 55% { transform: translateY(-2px) rotate(-2deg); } 80% { transform: translateY(1px) rotate(1deg); } 100% { transform: rotate(0); } }
 
-.hint-tap { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: rgba(245, 200, 66, 0.6); text-align: center; -webkit-animation: up 1s ease .5s both; animation: up 1s ease .5s both; }
+.half { position: absolute; inset: 0; transition: transform .55s cubic-bezier(.34, 1.2, .64, 1); }
+.half img { width: 100%; height: 100%; display: block; -webkit-user-drag: none; user-select: none; pointer-events: none; }
+.half-l { clip-path: polygon(0% 0%, 53.5% 0%, 47.5% 12%, 54.5% 24%, 47.5% 36%, 55.5% 50%, 47.5% 64%, 54.5% 76%, 47.5% 88%, 53.5% 100%, 0% 100%); }
+.half-r { clip-path: polygon(52% 0%, 100% 0%, 100% 100%, 52% 100%, 46% 88%, 53% 76%, 46% 64%, 54% 50%, 46% 36%, 53% 24%, 46% 12%); }
+.cookie3d.open .half-l { transform: translate(-46px, 10px) rotate(-13deg); }
+.cookie3d.open .half-r { transform: translate(46px, 10px) rotate(13deg); }
+.cookie3d.instant .half { transition: none; }
 
-/* Migalhas do crack */
+.hint-tap { font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: rgba(245, 200, 66, 0.85); text-align: center; -webkit-animation: up 1s ease .5s both; animation: up 1s ease .5s both; }
+
+/* Migalhas */
 .cp { position: absolute; border-radius: 50%; top: 50%; left: 50%; opacity: 0; -webkit-animation: cpf var(--du, .8s) ease-out forwards var(--dl2, 0s); animation: cpf var(--du, .8s) ease-out forwards var(--dl2, 0s); }
 @-webkit-keyframes cpf { 0% { -webkit-transform: translate(-50%, -50%) scale(1); opacity: 1; } 100% { -webkit-transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0); opacity: 0; } }
 @keyframes cpf { 0% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0); opacity: 0; } }
 
 /* ── O papelzinho clássico ── */
 .slip {
-  width: min(320px, 92vw);
+  width: min(350px, 94vw);
   background: linear-gradient(180deg, var(--paper) 0%, var(--paper2) 100%);
   border-radius: 4px;
-  padding: 20px 22px 16px;
+  padding: 22px 24px 18px;
   text-align: center;
   box-shadow: 0 2px 0 rgba(255, 255, 255, 0.25) inset, 0 14px 34px rgba(0, 0, 0, 0.55);
   display: none;
@@ -174,27 +233,25 @@ body {
 .slip.on { display: block; -webkit-animation: slipIn .6s cubic-bezier(.34, 1.45, .64, 1) both; animation: slipIn .6s cubic-bezier(.34, 1.45, .64, 1) both; }
 @-webkit-keyframes slipIn { from { opacity: 0; -webkit-transform: scaleY(.2) translateY(-14px); } to { opacity: 1; -webkit-transform: none; } }
 @keyframes slipIn { from { opacity: 0; transform: scaleY(.2) translateY(-14px); } to { opacity: 1; transform: none; } }
-/* moldura dupla clássica em tinta vermelha */
 .slip::before {
-  content: ""; position: absolute; inset: 6px;
+  content: ""; position: absolute; inset: 7px;
   border: 1px solid rgba(179, 55, 43, 0.55);
-  box-shadow: 0 0 0 3px transparent, inset 0 0 0 0 transparent;
   outline: 1px solid rgba(179, 55, 43, 0.25);
   outline-offset: 3px;
   border-radius: 2px;
   pointer-events: none;
 }
-.sl-header { font-size: 8px; letter-spacing: 4px; text-transform: uppercase; color: var(--tinta); margin-bottom: 12px; font-weight: 700; }
-.sl-text { font-family: 'Crimson Pro', serif; font-size: 16.5px; line-height: 1.65; color: #4a2c18; margin-bottom: 14px; font-style: italic; }
-.sl-lucky-label { font-size: 7.5px; letter-spacing: 3px; text-transform: uppercase; color: var(--tinta); opacity: .85; margin-bottom: 5px; }
-.sl-lucky { font-family: 'Crimson Pro', serif; font-weight: 600; font-size: 15px; letter-spacing: 6px; color: var(--tinta); margin-bottom: 12px; }
-.sl-days { font-size: 8px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--tinta-suave); }
+.sl-header { font-size: 11px; font-weight: 900; letter-spacing: 4px; text-transform: uppercase; color: var(--tinta); margin-bottom: 12px; }
+.sl-text { font-family: 'Crimson Pro', serif; font-size: 21px; font-weight: 600; line-height: 1.55; color: #4a2c18; margin-bottom: 14px; font-style: italic; }
+.sl-lucky-label { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--tinta); margin-bottom: 6px; }
+.sl-lucky { font-family: 'Crimson Pro', serif; font-weight: 700; font-size: 21px; letter-spacing: 7px; color: var(--tinta); margin-bottom: 12px; }
+.sl-days { font-size: 10.5px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--tinta-suave); }
 
-/* ── Rodapé de estado ── */
+/* ── Próximo biscoito ── */
 .state-row { text-align: center; -webkit-animation: up .7s ease .2s both; animation: up .7s ease .2s both; }
-.state-note { font-family: 'Crimson Pro', serif; font-style: italic; font-size: 14px; color: rgba(247, 239, 220, 0.75); }
-.state-count { font-family: 'Crimson Pro', serif; font-size: 26px; color: var(--gold); letter-spacing: .1em; margin-top: 2px; }
-.state-lost { font-size: 8.5px; letter-spacing: 2px; text-transform: uppercase; color: rgba(247, 239, 220, 0.45); margin-top: 8px; }
+.state-note { font-family: 'Crimson Pro', serif; font-style: italic; font-size: 18px; color: rgba(247, 239, 220, 0.9); }
+.state-count { font-family: 'Crimson Pro', serif; font-weight: 700; font-size: 36px; color: var(--gold); letter-spacing: .1em; margin-top: 2px; }
+.state-lost { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(247, 239, 220, 0.55); margin-top: 8px; }
 
 .hidden { display: none !important; }
 
@@ -202,11 +259,11 @@ body {
 .pwa-bar { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(50, 10, 4, 0.96); border-top: 1px solid rgba(245, 200, 66, 0.2); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; z-index: 50; -webkit-animation: slideup .4s ease both; animation: slideup .4s ease both; }
 @-webkit-keyframes slideup { from { -webkit-transform: translateY(100%); } to { -webkit-transform: none; } }
 @keyframes slideup { from { transform: translateY(100%); } to { transform: none; } }
-.pwa-txt { font-size: 10px; letter-spacing: 1px; color: rgba(247, 239, 220, 0.7); line-height: 1.4; }
-.pwa-txt strong { color: var(--gold); display: block; font-size: 11px; letter-spacing: 2px; }
+.pwa-txt { font-size: 12px; letter-spacing: 1px; color: rgba(247, 239, 220, 0.8); line-height: 1.4; }
+.pwa-txt strong { color: var(--gold); display: block; font-size: 13px; letter-spacing: 2px; }
 .pwa-actions { display: flex; gap: 8px; flex-shrink: 0; }
-.pwa-ok { font-family: 'Cinzel', serif; font-size: 9px; font-weight: 700; letter-spacing: 2px; color: #4a1206; background: var(--gold); border: none; padding: 8px 14px; border-radius: 4px; cursor: pointer; }
-.pwa-x { font-family: 'Cinzel', serif; font-size: 9px; color: rgba(247, 239, 220, 0.5); background: transparent; border: 1px solid rgba(245, 200, 66, 0.2); padding: 8px 10px; border-radius: 4px; cursor: pointer; }
+.pwa-ok { font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; color: #4a1206; background: var(--gold); border: none; padding: 9px 15px; border-radius: 4px; cursor: pointer; }
+.pwa-x { font-family: 'Cinzel', serif; font-size: 11px; color: rgba(247, 239, 220, 0.55); background: transparent; border: 1px solid rgba(245, 200, 66, 0.2); padding: 9px 11px; border-radius: 4px; cursor: pointer; }
 
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
@@ -220,7 +277,7 @@ body {
 <!-- ── Setup ── -->
 <div class="screen" id="screen-setup">
   <div class="setup-box">
-    <img class="setup-cookie" src="icon-192.png" alt="" width="84" height="84" style="border-radius:20px">
+    <img class="setup-cookie" src="icon-192.png" alt="" width="90" height="90" style="border-radius:22px">
     <div class="setup-h">Biscoito da Sorte</div>
     <p class="setup-sub">Cada dia da sua vida é um biscoito.<br>Pela expectativa do IBGE, vamos contar quantos ainda há no seu pote — e abrir um por dia.</p>
     <label class="setup-label" for="inp-data">Mês e ano de nascimento</label>
@@ -249,90 +306,52 @@ body {
     <div class="stage">
       <div class="glow"></div>
 
-      <!-- Biscoito: SVG com duas asas que se abrem -->
-      <div class="cookie-wrap" id="cookie">
-        <svg width="280" height="155" viewBox="40 44 240 133" xmlns="http://www.w3.org/2000/svg" style="display:block;overflow:visible">
-          <defs>
-            <radialGradient id="gL" cx="68%" cy="30%" r="75%">
-              <stop offset="0%" stop-color="#FFCE94"/>
-              <stop offset="30%" stop-color="#FFB45F"/>
-              <stop offset="65%" stop-color="#D4861A"/>
-              <stop offset="100%" stop-color="#8B4E08"/>
-            </radialGradient>
-            <radialGradient id="gR" cx="32%" cy="30%" r="75%">
-              <stop offset="0%" stop-color="#FFCE94"/>
-              <stop offset="30%" stop-color="#FFB45F"/>
-              <stop offset="65%" stop-color="#D4861A"/>
-              <stop offset="100%" stop-color="#8B4E08"/>
-            </radialGradient>
-            <radialGradient id="gC" cx="50%" cy="40%" r="60%">
-              <stop offset="0%" stop-color="#F8EEE0"/>
-              <stop offset="100%" stop-color="#DCCFC0"/>
-            </radialGradient>
-            <linearGradient id="gPap" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#F8F0D8"/>
-              <stop offset="100%" stop-color="#DDD098"/>
-            </linearGradient>
-          </defs>
+      <!-- ═══ Embalagem ═══ -->
+      <div class="pkt" id="pkt">
+        <div class="pkt-piece pkt-top" id="pkt-top">
+          <div class="pkt-skin">
+            <svg class="pkt-seal" viewBox="0 0 64 64" fill="none" stroke="#b3372b" aria-hidden="true">
+              <circle cx="32" cy="32" r="27" stroke-width="2.6"/>
+              <rect x="18.5" y="18.5" width="27" height="27" rx="4" stroke-width="2.4" transform="rotate(45 32 32)"/>
+              <rect x="24.5" y="24.5" width="15" height="15" rx="2.5" stroke-width="2.2"/>
+              <circle cx="32" cy="32" r="3.4" fill="#b3372b" stroke="none"/>
+            </svg>
+            <div class="pkt-name">Biscoito da Sorte</div>
+            <div class="pkt-tag">quebre o biscoito e leia sua sorte · peso líq. 5g</div>
+          </div>
+        </div>
+        <div class="pkt-piece pkt-bot">
+          <div class="pkt-skin">
+            <svg class="pkt-seal" viewBox="0 0 64 64" fill="none" stroke="#b3372b" aria-hidden="true">
+              <circle cx="32" cy="32" r="27" stroke-width="2.6"/>
+              <rect x="18.5" y="18.5" width="27" height="27" rx="4" stroke-width="2.4" transform="rotate(45 32 32)"/>
+              <rect x="24.5" y="24.5" width="15" height="15" rx="2.5" stroke-width="2.2"/>
+              <circle cx="32" cy="32" r="3.4" fill="#b3372b" stroke="none"/>
+            </svg>
+            <div class="pkt-name">Biscoito da Sorte</div>
+            <div class="pkt-tag">quebre o biscoito e leia sua sorte · peso líq. 5g</div>
+          </div>
+        </div>
+      </div>
 
-          <ellipse cx="163" cy="174" rx="88" ry="8" fill="rgba(0,0,0,.3)"/>
-
-          <g id="cL">
-            <path fill="url(#gL)" d="M139.2,135.5c-0.04,2.49-0.4,4-1.14,4.22c-6.23,1.85-86.73-2.79-90.46-13.77
-              c-1.35-3.98,2.95-11.96,9.97-21.36c17.23-23.07,50.8-54.69,57.12-56.56C122.6,45.8,139.5,117.2,139.2,135.5z"/>
-            <path fill="#EE7115" opacity=".55" d="M131,134.6c-3.07-0.23-7.05-10.84-10.54-24.19c-1.85-7.03-3.56-14.82-4.93-22.25
-              c-2.96-16.06-4.34-30.46-2.08-31.87c3.75-2.34,8.71,10.34,12.73,26.14c1.93,7.61,3.64,15.94,4.89,23.67
-              C133.7,121.7,134.3,134.8,131,134.6z"/>
-            <path fill="#FFCE94" d="M99.7,73.2c-3.1-3.6-19.3,6.3-14,13.6C91.1,94.2,106.3,80.9,99.7,73.2z"/>
-            <circle fill="#FFCE94" cx="78.5" cy="95.2" r="3.7"/>
-            <path fill="#EE7115" opacity=".35" d="M139.2,135.5c-0.04,2.49-0.4,4-1.14,4.22c-6.23,1.85-86.73-2.79-90.46-13.77
-              c-1.35-3.98,2.95-11.96,9.97-21.36c-0.64,9.18,0.68,18.74,8.32,20.78c15.5,4.14,23.77-4.13,36.17-1.55
-              C113.8,126.3,128.6,145,139.2,135.5z"/>
-          </g>
-
-          <g id="cC">
-            <path fill="url(#gC)" d="M212.7,73.8c-1.02,8.04-2.79,17.85-4.91,27.21c-0.14,0.65-0.29,1.29-0.44,1.93
-              c-3.38-0.39-7.36-0.77-11.75-1.03c-13.4-0.77-49.72-0.41-64.5,4.17c-3.72,1.15-7.28,2.57-10.61,4.31
-              c-0.18-0.7-0.37-1.41-0.55-2.12c-1.64-6.46-3.15-13.44-4.38-20.13c3.03-1.8,6.62-3.77,10.65-5.73
-              c14.84-7.19,54.95-14.09,76.65-10.81C206.2,72.1,209.5,72.8,212.7,73.8z"/>
-            <path fill="rgba(220,195,160,.5)" d="M207.8,101c-0.14,0.65-0.29,1.29-0.44,1.93c-3.38-0.39-7.36-0.77-11.75-1.03
-              c-13.4-0.77-49.72-0.41-64.5,4.17c-3.72,1.15-7.28,2.57-10.61,4.31c-0.18-0.7-0.37-1.41-0.55-2.12
-              C135,100.5,161.8,94.1,207.8,101z"/>
-            <path fill="#DDD098" opacity=".8" d="M168,102c20-1.5,42-2.5,62-0.5l1,14c-20-2-42-1-62,0.5z"/>
-            <path fill="url(#gPap)" d="M166,95c20-1.8,43-2.8,64-0.6l1,15c-21-2.2-44-1.2-65,0.6z"/>
-            <path fill="rgba(255,252,230,.4)" d="M166,95c20-1.8,43-2.8,64-0.6l0.5,4c-21-2.2-44-1.2-65,0.6z"/>
-            <line x1="176" y1="101" x2="228" y2="98" stroke="rgba(80,50,10,.25)" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="176" y1="106" x2="228" y2="103" stroke="rgba(80,50,10,.18)" stroke-width="1.2" stroke-linecap="round"/>
-          </g>
-
-          <g id="cR">
-            <path fill="url(#gR)" d="M186.8,135.5c0.04,2.49,0.4,4,1.14,4.22c6.23,1.85,86.73-2.79,90.46-13.77
-              c1.35-3.98-2.95-11.96-9.97-21.36c-17.23-23.07-50.8-54.69-57.12-56.56C203.5,45.8,186.5,117.2,186.8,135.5z"/>
-            <path fill="#EE7115" opacity=".55" d="M212.7,73.8c-1.09,8.6-3.04,19.21-5.35,29.14c-3.88,16.63-8.77,31.37-12.39,31.64
-              c-3.52,0.26-2.45-15.32,0.64-32.67c1.87-10.49,4.48-21.63,7.26-30.31c3.28-10.27,6.82-17.1,9.65-15.33
-              C214.1,57.3,213.9,64.3,212.7,73.8z"/>
-            <path fill="#FFCE94" d="M226.3,73.2c3.1-3.6,19.3,6.3,14,13.6C235,94.2,219.7,80.9,226.3,73.2z"/>
-            <circle fill="#FFCE94" cx="247.6" cy="95.2" r="3.7"/>
-            <path fill="#EE7115" opacity=".35" d="M186.8,135.5c0.04,2.49,0.4,4,1.14,4.22c6.23,1.85,86.73-2.79,90.46-13.77
-              c1.35-3.98-2.95-11.96-9.97-21.36c0.64,9.18-0.68,18.74-8.32,20.78c-15.5,4.14-23.77-4.13-36.17-1.55
-              C212.2,126.3,197.5,145,186.8,135.5z"/>
-          </g>
-        </svg>
-
+      <!-- ═══ Biscoito (Fluent 3D em duas metades) ═══ -->
+      <div class="cookie3d hidden" id="cookie">
+        <div class="half half-l"><img src="cookie.png" alt="Biscoito da sorte"></div>
+        <div class="half half-r"><img src="cookie.png" alt=""></div>
         <div id="cps" style="position:absolute;inset:0;pointer-events:none">
-          <div class="cp" style="width:7px;height:7px;background:#f5c842;--tx:-70px;--ty:-38px;--du:.76s;--dl2:0s"></div>
-          <div class="cp" style="width:5px;height:5px;background:#e8a030;--tx:74px;--ty:-34px;--du:.66s;--dl2:.04s"></div>
-          <div class="cp" style="width:5px;height:5px;background:#ffd060;--tx:-44px;--ty:-60px;--du:.84s;--dl2:.02s"></div>
-          <div class="cp" style="width:6px;height:6px;background:#f5c842;--tx:54px;--ty:-52px;--du:.72s;--dl2:.06s"></div>
-          <div class="cp" style="width:4px;height:4px;background:#d4a012;--tx:-80px;--ty:-10px;--du:.62s;--dl2:.03s"></div>
-          <div class="cp" style="width:5px;height:5px;background:#f0b820;--tx:82px;--ty:-14px;--du:.74s;--dl2:.05s"></div>
-          <div class="cp" style="width:4px;height:4px;background:#ffc040;--tx:18px;--ty:-70px;--du:.86s;--dl2:.01s"></div>
-          <div class="cp" style="width:8px;height:8px;background:#f5c842;--tx:-20px;--ty:-66px;--du:.92s;--dl2:.03s"></div>
+          <div class="cp" style="width:7px;height:7px;background:#e8c07a;--tx:-70px;--ty:-38px;--du:.76s;--dl2:0s"></div>
+          <div class="cp" style="width:5px;height:5px;background:#d49a4a;--tx:74px;--ty:-34px;--du:.66s;--dl2:.04s"></div>
+          <div class="cp" style="width:5px;height:5px;background:#f0d090;--tx:-44px;--ty:-60px;--du:.84s;--dl2:.02s"></div>
+          <div class="cp" style="width:6px;height:6px;background:#e8c07a;--tx:54px;--ty:-52px;--du:.72s;--dl2:.06s"></div>
+          <div class="cp" style="width:4px;height:4px;background:#c08838;--tx:-80px;--ty:-10px;--du:.62s;--dl2:.03s"></div>
+          <div class="cp" style="width:5px;height:5px;background:#e8b060;--tx:82px;--ty:-14px;--du:.74s;--dl2:.05s"></div>
+          <div class="cp" style="width:4px;height:4px;background:#f0c878;--tx:18px;--ty:-70px;--du:.86s;--dl2:.01s"></div>
+          <div class="cp" style="width:8px;height:8px;background:#e8c07a;--tx:-20px;--ty:-66px;--du:.92s;--dl2:.03s"></div>
         </div>
       </div>
     </div>
 
-    <div class="hint-tap" id="hint-tap">toque no biscoito para abrir</div>
+    <div class="hint-tap" id="hint-tap">✂ deslize para rasgar a embalagem</div>
 
     <!-- Papelzinho -->
     <div class="slip" id="slip">
@@ -343,7 +362,7 @@ body {
       <div class="sl-days" id="sl-days"></div>
     </div>
 
-    <!-- Estado: próximo biscoito -->
+    <!-- Próximo -->
     <div class="state-row hidden" id="next-row">
       <div class="state-note">o próximo biscoito chega à meia-noite</div>
       <div class="state-count" id="next-count">--:--:--</div>
@@ -372,11 +391,10 @@ body {
 <script>
 /* ═══════════════════════════════════════════════════════════
    BISCOITO DA SORTE · dinâmica
-   Regras:
-   - 1 biscoito por dia, novo à MEIA-NOITE (não +24h da abertura)
-   - frase e números determinísticos por (dia + nascimento):
-     recarregar a página não muda a sorte
-   - biscoito não aberto é perdido para sempre (só contamos, sem punir)
+   - embalagem rasga com gesto de arrastar (dedo ou mouse)
+   - 1 biscoito por dia, novo à MEIA-NOITE
+   - sorte determinística por (dia + nascimento)
+   - biscoito não aberto é perdido para sempre (só contamos)
 ═══════════════════════════════════════════════════════════ */
 
 var FRASES = BANCO;
@@ -390,20 +408,17 @@ function dayKey(d) { d = d || new Date(); return d.getFullYear() + '-' + pad2(d.
 function keyToDate(k) { var p = k.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
 function daysBetween(a, b) { return Math.round((b - a) / 86400000); }
 
-/* Nascimento MM/AAAA → dias de biscoito restantes (granularidade diária) */
 function calcDias(mes, anoFull, genero) {
   var nasc = new Date(anoFull, mes - 1, 15);
   var idadeDias = (Date.now() - nasc.getTime()) / 86400000;
   if (idadeDias < 0) idadeDias = 0;
   var evAnos = EV[genero] || EV.N;
   var expectativaDias = evAnos * 365.25;
-  // quem já passou da expectativa ganha a sobrevida média (+6.2 anos)
   if (idadeDias > expectativaDias) expectativaDias = idadeDias + 6.2 * 365.25;
   var restam = Math.round(expectativaDias - idadeDias);
   return restam < 0 ? 0 : restam;
 }
 
-/* Seed determinística: mesmo dia + mesma pessoa = mesma sorte */
 function seedFor(mes, ano) {
   var k = dayKey() + '|' + mes + '|' + ano;
   var h = 2166136261;
@@ -436,6 +451,7 @@ function sorteDoDia(dias, mes, ano) {
 var _gender = null;
 var _deferredInstall = null;
 var _cdTimer = null;
+var _ctx = null; // { dias, mes, ano }
 
 function selGender(g) {
   _gender = g;
@@ -444,7 +460,6 @@ function selGender(g) {
   document.getElementById('btn-n').className = 'gender-btn' + (g === 'N' ? ' active' : '');
 }
 
-/* Formata MM/AAAA */
 document.getElementById('inp-data').addEventListener('input', function () {
   var v = this.value.replace(/\D/g, '');
   if (v.length > 2) v = v.slice(0, 2) + '/' + v.slice(2, 6);
@@ -480,28 +495,6 @@ function showMain(mes, ano, gen) {
   setTimeout(showPwa, 3000);
 }
 
-function renderMain(mes, ano, gen) {
-  var dias = calcDias(mes, ano, gen);
-  var abertos = parseInt(load('bsc_opened_count') || '0', 10);
-  var first = load('bsc_first') || dayKey();
-  var hoje = dayKey();
-  var abriuHoje = load('bsc_last_opened') === hoje;
-
-  // perdidos = dias corridos desde o início − abertos − (hoje ainda em aberto?)
-  var corridos = daysBetween(keyToDate(first), keyToDate(hoje)) + 1;
-  var perdidos = corridos - abertos - (abriuHoje ? 0 : 1);
-  if (perdidos < 0) perdidos = 0;
-
-  renderTally(dias, abertos, perdidos);
-
-  if (abriuHoje) {
-    var s = sorteDoDia(dias, mes, ano);
-    showOpened(s, dias, true);
-  } else {
-    showReady(dias, mes, ano);
-  }
-}
-
 function renderTally(dias, abertos, perdidos) {
   document.getElementById('tally').innerHTML =
     '<span><b>' + dias.toLocaleString('pt-BR') + '</b> no pote</span>' +
@@ -509,50 +502,142 @@ function renderTally(dias, abertos, perdidos) {
     (perdidos > 0 ? '<span><b>' + perdidos.toLocaleString('pt-BR') + '</b> ' + (perdidos === 1 ? 'perdido' : 'perdidos') + '</span>' : '');
 }
 
-function showReady(dias, mes, ano) {
-  var cookie = document.getElementById('cookie');
-  cookie.className = 'cookie-wrap';
-  resetWings();
-  document.getElementById('hint-tap').className = 'hint-tap';
+function renderMain(mes, ano, gen) {
+  var dias = calcDias(mes, ano, gen);
+  _ctx = { dias: dias, mes: mes, ano: ano };
+
+  var abertos = parseInt(load('bsc_opened_count') || '0', 10);
+  var first = load('bsc_first') || dayKey();
+  var hoje = dayKey();
+  var abriuHoje = load('bsc_last_opened') === hoje;
+
+  var corridos = daysBetween(keyToDate(first), keyToDate(hoje)) + 1;
+  var perdidos = corridos - abertos - (abriuHoje ? 0 : 1);
+  if (perdidos < 0) perdidos = 0;
+
+  renderTally(dias, abertos, perdidos);
+
+  if (abriuHoje) {
+    showOpened(sorteDoDia(dias, mes, ano), dias, true);
+  } else if (load('bsc_torn') === hoje) {
+    showCookie(false);
+  } else {
+    showPacket();
+  }
+}
+
+/* ── Embalagem: rasgar com arrasto ── */
+var _tearBound = false;
+function showPacket() {
+  var pkt = document.getElementById('pkt');
+  var top = document.getElementById('pkt-top');
+  pkt.className = 'pkt';
+  top.className = 'pkt-piece pkt-top';
+  top.style.transform = '';
+  document.getElementById('cookie').className = 'cookie3d hidden';
   document.getElementById('slip').className = 'slip';
   document.getElementById('next-row').className = 'state-row hidden';
-  cookie.onclick = function () { openCookie(dias, mes, ano); };
+  var hint = document.getElementById('hint-tap');
+  hint.className = 'hint-tap';
+  hint.textContent = '✂ deslize para rasgar a embalagem';
+  if (!_tearBound) { bindTear(); _tearBound = true; }
 }
 
-function resetWings() {
-  var gL = document.getElementById('cL');
-  var gR = document.getElementById('cR');
-  var gC = document.getElementById('cC');
-  [gL, gR, gC].forEach(function (g) { if (g) { g.style.transition = 'none'; g.style.transform = ''; g.style.opacity = ''; } });
+function bindTear() {
+  var pkt = document.getElementById('pkt');
+  var top = document.getElementById('pkt-top');
+  var startX = null, torn = false, moved = false;
+
+  function onDown(e) {
+    if (torn) return;
+    startX = (e.touches ? e.touches[0].clientX : e.clientX);
+    moved = false;
+    pkt.classList.add('tearing');
+    top.classList.remove('spring');
+    if (e.pointerId !== undefined && pkt.setPointerCapture) {
+      try { pkt.setPointerCapture(e.pointerId); } catch (x) {}
+    }
+    e.preventDefault();
+  }
+  function onMove(e) {
+    if (torn || startX === null) return;
+    var x = (e.touches ? e.touches[0].clientX : e.clientX);
+    var p = (x - startX) / 150;
+    if (Math.abs(p) > 0.04) moved = true;
+    if (p < 0) p = p / 3; // resistência pra esquerda
+    top.style.transform = 'translateX(' + (p * 130) + 'px) rotate(' + (p * 9) + 'deg)';
+    if (p >= 1) { torn = true; finishTear(); }
+    e.preventDefault();
+  }
+  function onUp() {
+    if (torn) return;
+    if (startX !== null && !moved) {
+      // toque sem arrasto: dá a dica com um balancinho
+      pkt.classList.remove('nudge');
+      void pkt.offsetWidth;
+      pkt.classList.add('nudge');
+    }
+    startX = null;
+    top.classList.add('spring');
+    top.style.transform = '';
+    pkt.classList.remove('tearing');
+  }
+  function finishTear() {
+    startX = null;
+    save('bsc_torn', dayKey());
+    top.classList.add('gone');
+    var pktEl = document.getElementById('pkt');
+    setTimeout(function () { pktEl.classList.add('drop'); }, 180);
+    setTimeout(function () {
+      pktEl.className = 'pkt hidden';
+      showCookie(true);
+    }, 760);
+  }
+
+  if (window.PointerEvent) {
+    pkt.addEventListener('pointerdown', onDown);
+    pkt.addEventListener('pointermove', onMove);
+    pkt.addEventListener('pointerup', onUp);
+    pkt.addEventListener('pointercancel', onUp);
+  } else {
+    pkt.addEventListener('touchstart', onDown, { passive: false });
+    pkt.addEventListener('touchmove', onMove, { passive: false });
+    pkt.addEventListener('touchend', onUp);
+    pkt.addEventListener('mousedown', onDown);
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+  }
 }
 
-function openCookie(dias, mes, ano) {
+/* ── Biscoito ── */
+function showCookie(pop) {
+  document.getElementById('pkt').className = 'pkt hidden';
+  var cookie = document.getElementById('cookie');
+  cookie.className = 'cookie3d' + (pop ? ' pop' : '');
+  var hint = document.getElementById('hint-tap');
+  hint.className = 'hint-tap';
+  hint.textContent = 'toque no biscoito para abrir';
+  cookie.onclick = openCookie;
+}
+
+function openCookie() {
   var cookie = document.getElementById('cookie');
   if (cookie.className.indexOf('open') >= 0) return;
   cookie.onclick = null;
-  cookie.className = 'cookie-wrap crack';
+  cookie.className = 'cookie3d crack';
   document.getElementById('hint-tap').className = 'hint-tap hidden';
 
   setTimeout(function () {
-    cookie.className = 'cookie-wrap open';
-    var gL = document.getElementById('cL');
-    var gR = document.getElementById('cR');
-    var gC = document.getElementById('cC');
-    var tf = 'transform .6s cubic-bezier(.34,1.2,.64,1)';
-    if (gL) { gL.style.transition = tf; gL.style.transformBox = 'fill-box'; gL.style.transformOrigin = 'right center'; gL.style.transform = 'translateX(-60px) translateY(-12px) rotate(-14deg)'; }
-    if (gR) { gR.style.transition = tf; gR.style.transformBox = 'fill-box'; gR.style.transformOrigin = 'left center'; gR.style.transform = 'translateX(60px) translateY(-12px) rotate(14deg)'; }
-    if (gC) { gC.style.transition = 'opacity .4s ease .2s'; gC.style.opacity = '0'; }
+    cookie.className = 'cookie3d open';
 
     save('bsc_last_opened', dayKey());
     save('bsc_opened_count', String(parseInt(load('bsc_opened_count') || '0', 10) + 1));
 
-    var s = sorteDoDia(dias, mes, ano);
-    showOpened(s, dias, false);
+    var s = sorteDoDia(_ctx.dias, _ctx.mes, _ctx.ano);
+    fillSlip(s, _ctx.dias);
+    renderTally(_ctx.dias, parseInt(load('bsc_opened_count') || '0', 10), 0);
+    showNext();
 
-    // re-renderiza contadores
-    renderTally(dias, parseInt(load('bsc_opened_count') || '0', 10), 0);
-
-    // migalhas
     var ps = document.getElementById('cps').querySelectorAll('.cp');
     for (var i = 0; i < ps.length; i++) {
       ps[i].style.animation = 'none';
@@ -562,23 +647,19 @@ function openCookie(dias, mes, ano) {
   }, 460);
 }
 
-function showOpened(sorte, dias, instant) {
-  var cookie = document.getElementById('cookie');
-  cookie.className = 'cookie-wrap open';
-  document.getElementById('hint-tap').className = 'hint-tap hidden';
-  if (instant) {
-    // já veio aberto (recarregou a página): asas abertas sem animação
-    var gL = document.getElementById('cL');
-    var gR = document.getElementById('cR');
-    var gC = document.getElementById('cC');
-    if (gL) { gL.style.transition = 'none'; gL.style.transformBox = 'fill-box'; gL.style.transformOrigin = 'right center'; gL.style.transform = 'translateX(-60px) translateY(-12px) rotate(-14deg)'; }
-    if (gR) { gR.style.transition = 'none'; gR.style.transformBox = 'fill-box'; gR.style.transformOrigin = 'left center'; gR.style.transform = 'translateX(60px) translateY(-12px) rotate(14deg)'; }
-    if (gC) { gC.style.transition = 'none'; gC.style.opacity = '0'; }
-  }
+function fillSlip(sorte, dias) {
   document.getElementById('sl-text').textContent = sorte.frase;
   document.getElementById('sl-lucky').textContent = sorte.nums;
   document.getElementById('sl-days').textContent = 'restam ' + (dias - 1 >= 0 ? (dias - 1) : 0).toLocaleString('pt-BR') + ' biscoitos no seu pote';
   document.getElementById('slip').className = 'slip on';
+}
+
+function showOpened(sorte, dias, instant) {
+  document.getElementById('pkt').className = 'pkt hidden';
+  var cookie = document.getElementById('cookie');
+  cookie.className = 'cookie3d open' + (instant ? ' instant' : '');
+  document.getElementById('hint-tap').className = 'hint-tap hidden';
+  fillSlip(sorte, dias);
   showNext();
 }
 
@@ -608,7 +689,6 @@ function startCountdown() {
     if (!el) return;
     if (diff <= 0) {
       clearInterval(_cdTimer);
-      // meia-noite virou: biscoito novo
       var mes = parseInt(load('bsc_mes'), 10), ano = parseInt(load('bsc_ano'), 10), gen = load('bsc_gen');
       renderMain(mes, ano, gen);
       return;
@@ -629,7 +709,6 @@ function startCountdown() {
   var gen = load('bsc_gen');
   if (mes && ano && gen) {
     var anoN = parseInt(ano, 10);
-    // migração: versões antigas salvavam 2 dígitos (e assumiam 2000+)
     if (anoN < 100) {
       var atual2 = new Date().getFullYear() % 100;
       anoN = anoN <= atual2 ? 2000 + anoN : 1900 + anoN;
@@ -671,7 +750,7 @@ function dismissPwa() {
   document.getElementById('pwa-ios').className = 'pwa-bar hidden';
 }
 
-/* ── Flecos dourados ── */
+/* ── Flecos ── */
 (function () {
   var c = document.getElementById('flecks');
   var cols = ['#f5c842', '#d4a012', '#ffdf6b', '#e8891a'];

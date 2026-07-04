@@ -1,6 +1,6 @@
-var CACHE = 'biscoito-v3';
+var CACHE = 'biscoito-v4';
 // caminhos relativos: o app vive em /biscoito/, não na raiz do domínio
-var FILES = ['./', './index.html', './manifest.json', './frases.js', './icon-192.png', './icon-512.png'];
+var FILES = ['./', './index.html', './manifest.json', './frases.js', './cookie.png', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', function (e) {
   e.waitUntil(
